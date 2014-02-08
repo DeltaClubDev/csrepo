@@ -1,0 +1,19 @@
+package unl.cse;
+
+import java.util.ArrayList;  
+import java.util.Collections;
+import java.util.List;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name="root", namespace="unl.cse")
+public class ProductsHub {
+	@XmlElementWrapper(name="products")
+	@XmlElement(name="equipment")
+	private final List <Equipment> equipmentCollection;
+	
+	
+	
+
+}

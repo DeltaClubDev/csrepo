@@ -1,0 +1,39 @@
+package cse.unl;
+
+public class DatarConvert {
+	
+	public DatarConvert() {
+		
+	}
+	
+	public void parsePersonsXml() {
+		
+	}
+	
+	public void parseCustomerXml() {
+		
+	}
+	
+	public void parseProductXml() {
+		
+	}
+	
+	//LEXI! Y U NO MAKE?!
+	public void parsePersonsJson() {
+		
+	}
+	
+	//LEXI! Y U NO MAKE?!
+	public void parseCustomerJson() {
+		
+	}
+	
+	//LEXI! Y U NO MAKE?!
+	public void parseProductJson() {
+		
+	}
+	
+	public static void main(String[] args) {
+		new DatarConvert();
+	}
+}
