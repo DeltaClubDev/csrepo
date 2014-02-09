@@ -16,17 +16,17 @@ public class PersonsHub {
 	
 	@XmlElementWrapper(name = "people")
 	@XmlElement(name = "person")
-	private final List<Persons> personsCollection;
+	private final List<Persons> personsList;
 	
 	public PersonsHub() {
-		this.personsCollection = new ArrayList<Persons>();
+		this.personsList = new ArrayList<Persons>();
 	}
 	
 	public List<Persons> getCollection() {
-    	return Collections.unmodifiableList(this.personsCollection);
+    	return Collections.unmodifiableList(this.personsList);
 	}
 	
 	public void addPersons(Persons newPersons) {
-		this.personsCollection.add(newPersons);
+		this.personsList.add(newPersons);
 	}
 }

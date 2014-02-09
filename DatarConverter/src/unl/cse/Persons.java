@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlRootElement(name = "person")
-@XmlType(propOrder = {"id", "firstName", "lastName", "addressCollection", "emailsCollection"} )
+@XmlType(propOrder = {"id", "firstName", "lastName", "addressList", "emailsList"} )
 public class Persons {
 
 	private String id;
@@ -22,10 +22,10 @@ public class Persons {
 	
 	@XmlElementWrapper(name = "emails")
 	@XmlElement(name = "email")
-	private ArrayList<String> emailsCollection = new ArrayList<String>();
+	private ArrayList<String> emailsList = new ArrayList<String>();
 	
 	@XmlElement(name = "address")
-	private ArrayList<PersonsAddress> addressCollection = new ArrayList<PersonsAddress>();
+	private ArrayList<PersonsAddress> addressList = new ArrayList<PersonsAddress>();
 	
 	public Persons() { }
 	
@@ -45,25 +45,25 @@ public class Persons {
 	}
 
 	public void setAddress(PersonsAddress address) {
-		this.addressCollection.add(address);
+		this.addressList.add(address);
 	}
 
 	public void setEmails(String[] emails) {
 		for (String s : emails) {
 			if (s != null) {
-				this.emailsCollection.add(s);
+				this.emailsList.add(s);
 			} else {
-				this.emailsCollection.add("N/A");
+				this.emailsList.add("N/A");
 			}
 		}
 	}
 	
 	public List<PersonsAddress> getAddress() {
-    	return Collections.unmodifiableList(this.addressCollection);
+    	return Collections.unmodifiableList(this.addressList);
 	}
 	
 	public List<String> getEmails() {
-		return Collections.unmodifiableList(this.emailsCollection);
+		return Collections.unmodifiableList(this.emailsList);
 	}
 
 	public String getFirstName() {

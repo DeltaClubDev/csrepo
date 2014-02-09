@@ -43,8 +43,8 @@ public class ProductsHub {
 		return Collections.unmodifiableList(this.liceList);
 	}
 	
-	public void addLicense(Consultation newLicense) {
-		this.consultList.add(newLicense);
+	public void addLicense(License newLicense) {
+		this.liceList.add(newLicense);
 	}
 
 }

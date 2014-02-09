@@ -8,11 +8,29 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(propOrder={"code", "name", "hourPrice", "consultant"})
 
 public class Consultation {
-	Double hourPrice;
+	
+	private String code;
+	private String name;
+	private Double hourPrice;
+	private String personId;
+	private String firstName;
+	private String lastName;
+	
+	/*
+	 *
+	 * NOTE! Need to construct with persons id
+	 * to reference the personal data.
+	 *
+	 */
+	
+	public Consultation(String id) {
+		this.personId = id;
+	}
 	
 	public String getCode() {
 		return code;
 	}
+	
 	@XmlElement(name="code")
 	public void setCode(String code) {
 		this.code = code;
@@ -29,9 +47,17 @@ public class Consultation {
 	public Double getHourPrice() {
 		return hourPrice;
 	}
+	
 	@XmlElement(name="hourPrice")
-	public void setHourPrice(Double hourPrice) {
-		this.hourPrice = hourPrice;
+	public void setHourPrice(String hourPrice) {
+		Double temp;
+		try {
+			temp = Double.parseDouble(hourPrice);
+		} catch (Exception e) {
+			e.printStackTrace();
+			temp = 0.0;
+		}
+		this.hourPrice = temp;
 	}
 	
 	public Persons getConsultant() {
@@ -40,6 +66,5 @@ public class Consultation {
 	@XmlElement(name="consultant")
 	public void setConsultant(Persons consultant) {
 		this.consultant = consultant;
-	}
-	
+	}	
 }
