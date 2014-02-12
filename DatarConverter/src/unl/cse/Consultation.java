@@ -1,58 +1,42 @@
 package unl.cse;
 
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
+
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name="unl.cse")
-@XmlType(propOrder={"code", "name", "hourPrice", "consultant"})
 
+@XmlType(propOrder={"code", "name", "hourPrice", "consultList"})
 public class Consultation {
 	
 	private String code;
 	private String name;
-	private Double hourPrice;
-	private String personId;
-	private String firstName;
-	private String lastName;
+	public Double hourPrice;
 	
-	/*
-	 *
-	 * NOTE! Need to construct with persons id
-	 * to reference the personal data.
-	 *
-	 */
+	@XmlElement(name="consultant")
+	private final ArrayList<Persons> consultList;
 	
-	public Consultation(String id) {
-		this.personId = id;
-	}
-	
-	public String getCode() {
-		return code;
+	public Consultation() {
+		this.consultList = new ArrayList<Persons>();	
 	}
 	
 	@XmlElement(name="code")
 	public void setCode(String code) {
-		this.code = code;
+		this.code = code.trim();
 	}
 	
-	public String getName() {
-		return name;
-	}
 	@XmlElement(name="name")
 	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public Double getHourPrice() {
-		return hourPrice;
+		this.name = name.trim();
 	}
 	
 	@XmlElement(name="hourPrice")
 	public void setHourPrice(String hourPrice) {
 		Double temp;
 		try {
-			temp = Double.parseDouble(hourPrice);
+			temp = Double.parseDouble(hourPrice.trim());
 		} catch (Exception e) {
 			e.printStackTrace();
 			temp = 0.0;
@@ -60,11 +44,23 @@ public class Consultation {
 		this.hourPrice = temp;
 	}
 	
-	public Persons getConsultant() {
-		return consultant;
+	public void addConsultList(List<Persons> consult) {
+		this.consultList.addAll(consult);
 	}
-	@XmlElement(name="consultant")
-	public void setConsultant(Persons consultant) {
-		this.consultant = consultant;
-	}	
+	
+	public String getCode() {
+		return code;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public Double getHourPrice() {
+		return hourPrice;
+	}
+	
+	public List<Persons> getConsultList() {
+		return Collections.unmodifiableList(this.consultList);
+	}
 }

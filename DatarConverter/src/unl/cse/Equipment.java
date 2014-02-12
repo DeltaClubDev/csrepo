@@ -9,41 +9,41 @@ import javax.xml.bind.annotation.XmlType;
 public class Equipment {
 	private String code;
 	private String name;
-	private Double unitPrice;
+	public Double unitPrice;
 	
 	public Equipment() { }
 	
-	public String getCode() {
-		return code;
+	@XmlElement(name="code")
+	public void setCode(String code) {
+		this.code = code.trim();
 	}
 	
-	@XmlElement(name="code")
-	public void setcode(String code) {
-		this.code = code;
+	@XmlElement(name="name")
+	public void setName(String name) {
+		this.name = name.trim();
+	}
+	
+	@XmlElement(name="unitPrice")
+	public void setUnitPrice(String unitPrice) {
+		Double temp;
+		try {
+			temp = Double.parseDouble(unitPrice.trim());
+		} catch (Exception e) {
+			e.printStackTrace();
+			temp = 0.0;
+		}
+		this.unitPrice = temp;
+	}
+	
+	public String getCode() {
+		return code;
 	}
 	
 	public String getName() {
 		return name;
 	}
 	
-	@XmlElement(name="name")
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public Double unitPrice() {
+	public Double getUnitPrice() {
 		return unitPrice;
-	}
-	
-	@XmlElement(name="unitPrice")
-	public void setPricePerUnit(String unitPrice) {
-		Double temp;
-		try {
-			temp = Double.parseDouble(unitPrice);
-		} catch (Exception e) {
-			e.printStackTrace();
-			temp = 0.0;
-		}
-		this.unitPrice = temp;
 	}
 }

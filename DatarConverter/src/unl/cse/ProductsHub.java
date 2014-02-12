@@ -1,15 +1,16 @@
 package unl.cse;
 
-import java.util.ArrayList;  
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name="root", namespace="unl.cse")
+@XmlRootElement(name="products", namespace="unl.cse")
+@XmlType(propOrder = {"equipList", "consultList", "liceList"})
 public class ProductsHub {
-	@XmlElementWrapper(name="products")
+	
 	@XmlElement(name="equipment")
 	private final List<Equipment> equipList;
 	@XmlElement(name="consultation")
@@ -23,28 +24,27 @@ public class ProductsHub {
 		this.liceList = new ArrayList<License>();
 	}
 	
-	public List<Equipment> getEquipList() {
-		return Collections.unmodifiableList(this.equipList);
-	}
-	
 	public void addEquipment(Equipment newEquipment) {
 		this.equipList.add(newEquipment);
-	}
-	
-	public List<Consultation> getConsultList() {
-		return Collections.unmodifiableList(this.consultList);
 	}
 	
 	public void addConsutation(Consultation newConsultation) {
 		this.consultList.add(newConsultation);
 	}
 	
-	public List<License> getLiceList() {
-		return Collections.unmodifiableList(this.liceList);
-	}
-	
 	public void addLicense(License newLicense) {
 		this.liceList.add(newLicense);
 	}
-
+	
+	public List<Equipment> getEquipList() {
+		return Collections.unmodifiableList(this.equipList);
+	}
+	
+	public List<Consultation> getConsultList() {
+		return Collections.unmodifiableList(this.consultList);
+	}
+	
+	public List<License> getLiceList() {
+		return Collections.unmodifiableList(this.liceList);
+	}
 }
