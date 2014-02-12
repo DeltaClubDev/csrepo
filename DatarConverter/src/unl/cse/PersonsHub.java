@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * Main Persons class to interface with the Persons data
  * 
  * @author Jacob Charles
- * @author Jacob Charles
+ * @author Alexis Kennedy
  * @version 0.1.0
  */
 
