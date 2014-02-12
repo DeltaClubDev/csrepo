@@ -11,6 +11,8 @@ import javax.xml.bind.Marshaller;
 
 import org.json.simple.JSONObject;
 
+//TODO: finish Java Docs and JSON parser!
+
 public class DatarConvert {
 	private final String PERSONS_DATA_FILE = "datar/Persons.dat";
 	private final String CUSTOMER_DATA_FILE = "datar/Customers.dat";
