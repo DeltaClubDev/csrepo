@@ -1,0 +1,9 @@
+package unl.cse;
+
+public class GovComp {
+	
+	private String code;
+	private String name;
+	
+	public GovComp() { }
+}

@@ -1,0 +1,33 @@
+package unl.cse;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
+public class CustomersHub {
+
+	private final List<GovComp> govList;
+	
+	private final List<PubComp> pubList;
+	
+	public CustomersHub() {
+		this.govList = new ArrayList<GovComp>();
+		this.pubList = new ArrayList<PubComp>();
+	}
+	
+	public void addGovList(GovComp newGovList) {
+		this.govList.add(newGovList);
+	}
+	
+	public void addPubList(PubComp newPubList) {
+		this.pubList.add(newPubList);
+	}
+	
+	public List<GovComp> getGovList() {
+		return Collections.unmodifiableList(this.govList);
+	}
+}

@@ -1,0 +1,28 @@
+package unl.cse;
+
+import java.util.ArrayList;
+
+import javax.xml.bind.annotation.XmlElement;
+
+public class GovComp {
+	
+	private String code;
+	private String name;
+	
+	@XmlElement(name="humanRep")
+	private final ArrayList<Persons> humanRepList;
+	
+	public GovComp() { 
+		this.humanRepList = new ArrayList<Persons>();	
+	}
+	
+	@XmlElement(name="code")
+	public void setCode(String code) {
+		this.code = code.trim();
+	}
+	
+	@XmlElement(name="name")
+	public void setName(String name) {
+		this.name = name.trim();
+	}
+}

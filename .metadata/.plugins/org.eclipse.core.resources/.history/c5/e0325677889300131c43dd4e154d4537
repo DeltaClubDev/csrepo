@@ -1,0 +1,97 @@
+package unl.cse;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
+/**
+ * The <b>Address</b> class was designed to be used for multiple types
+ * of objects. This is because Companies, and People will have addresses.
+ */
+@XmlRootElement(namespace = "unl.cse")
+@XmlType(propOrder = { "street", "city", "state", "zip", "country"})
+public class Address {
+	private String street;
+	private String city;
+	private String state;
+	private String zip;
+	private String country;
+	
+	public Address() { }
+
+	/**
+	 * <i>setStreet</i> sets the street name for the 
+	 * <b>Address</b> Object
+	 * 
+	 * @param street
+	 */
+	@XmlElement(name = "street")
+	public void setStreet(String street) {
+		
+		if (street != null || street.equals(" ")) {
+			this.street = street.trim();
+		} else {
+			this.street = "N/A";
+		}
+	}
+
+	@XmlElement(name = "city")
+	public void setCity(String city) {
+		
+		if (city != null || city.equals(" ")) {
+			this.city = city.trim();
+		} else {
+			this.city = "N/A";
+		}
+	}
+
+	@XmlElement(name = "state")
+	public void setState(String state) {
+		
+		if (state != null || state.equals(" ")) {
+			this.state = state.trim();
+		} else {
+			this.state = "N/A";
+		}
+	}
+
+	@XmlElement(name = "zip")
+	public void setZip(String zip) {
+		
+		if (zip != null || !(zip.equals(" "))) {
+			this.zip = zip.trim();
+		} else {
+			this.zip = "N/A";
+		}
+	}
+
+	@XmlElement(name = "country")
+	public void setCountry(String country) {
+
+		if (country != null || !(country.equals(" "))) {
+			this.country = country.trim();
+		} else {
+			this.country = "N/A";
+		}
+	}
+
+	public String getStreet() {
+		return street;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public String getZip() {
+		return zip;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+}
