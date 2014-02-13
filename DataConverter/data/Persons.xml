@@ -1,369 +1,64 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:root xmlns:ns2="unl.cse">
-    <people>
-        <person>
-            <id>944c</id>
-            <names>
-                <first>Castro</first>
-                <last> Starlin</last>
-            </names>
-            <broker></broker>
-            <address>
-                <street>1060 West Addison Street</street>
-                <city>Chicago</city>
-                <state>IL</state>
-                <zip>60613</zip>
-                <country>USA</country>
-            </address>
-            <emails>
-                <email>scastro@cubs.com</email>
-                <email>starlin_castro13@gmail.com</email>
-            </emails>
-        </person>
-        <person>
-            <id>306a</id>
-            <names>
-                <first>Sampson</first>
-                <last> Brock</last>
-            </names>
-            <broker></broker>
-            <address>
-                <street>123 N 1st Street</street>
-                <city>Omaha</city>
-                <state>NE</state>
-                <zip>68116</zip>
-                <country>USA</country>
-            </address>
-            <emails>
-                <email>brock_f_sampson@gmail.com</email>
-                <email>bsampson@venture.com</email>
-            </emails>
-        </person>
-        <person>
-            <id>2342</id>
-            <names>
-                <first>O'Brien</first>
-                <last> Miles</last>
-            </names>
-            <broker></broker>
-            <address>
-                <street>123 Friendly Street</street>
-                <city>Ottawa</city>
-                <state>ON</state>
-                <zip>K1A 0G9</zip>
-                <country>Canada</country>
-            </address>
-            <emails>
-                <email>N/A</email>
-            </emails>
-        </person>
-        <person>
-            <id>aef1</id>
-            <names>
-                <first>Gekko</first>
-                <last> Gordon</last>
-            </names>
-            <broker>E</broker>
-            <broker>sec001</broker>
-            <address>
-                <street>1 Wall Street</street>
-                <city>New York</city>
-                <state>NY</state>
-                <zip>10005-0012</zip>
-                <country>USA</country>
-            </address>
-            <emails>
-                <email>N/A</email>
-            </emails>
-        </person>
-        <person>
-            <id>321f</id>
-            <names>
-                <first>Fox</first>
-                <last> Bud</last>
-            </names>
-            <broker>J</broker>
-            <broker>sec991</broker>
-            <address>
-                <street>321 Bronx Street</street>
-                <city>New York</city>
-                <state>NY</state>
-                <zip>10004</zip>
-                <country>USA</country>
-            </address>
-            <emails>
-                <email>bfox@gmail.com</email>
-                <email>csheen@crazy.net</email>
-            </emails>
-        </person>
-        <person>
-            <id>ma12</id>
-            <names>
-                <first>Sveum</first>
-                <last> Dale</last>
-            </names>
-            <broker></broker>
-            <address>
-                <street>1060 West Addison Street</street>
-                <city>Chicago</city>
-                <state>IL</state>
-                <zip>60613</zip>
-                <country>USA</country>
-            </address>
-            <emails>
-                <email>sveum@cubs.com</email>
-            </emails>
-        </person>
-        <person>
-            <id>321nd</id>
-            <names>
-                <first>Hartnell</first>
-                <last> William</last>
-            </names>
-            <broker></broker>
-            <address>
-                <street>1060 West Addison Street</street>
-                <city>Chicago</city>
-                <state>IL</state>
-                <zip>60613</zip>
-                <country>USA</country>
-            </address>
-            <emails>
-                <email>whartnell@doctors.com</email>
-                <email>dr@who.com</email>
-            </emails>
-        </person>
-        <person>
-            <id>nf32a</id>
-            <names>
-                <first>Troughton</first>
-                <last> Patrick</last>
-            </names>
-            <broker></broker>
-            <address>
-                <street>1060 West Addison Street</street>
-                <city>Chicago</city>
-                <state>IL</state>
-                <zip>60613</zip>
-                <country>USA</country>
-            </address>
-            <emails>
-                <email>ptroug@cse.unl.edu</email>
-                <email>ptrou32@unl.edu</email>
-            </emails>
-        </person>
-        <person>
-            <id>321na</id>
-            <names>
-                <first>Pertwee</first>
-                <last> Jon</last>
-            </names>
-            <broker>E</broker>
-            <broker>sec125</broker>
-            <address>
-                <street>301 Front St W</street>
-                <city> Toronto</city>
-                <state> ON</state>
-                <zip> M5V 2T6</zip>
-                <country> Canada</country>
-            </address>
-            <emails>
-                <email>jpet@whofan.com</email>
-            </emails>
-        </person>
-        <person>
-            <id>231</id>
-            <names>
-                <first>Baker</first>
-                <last>Tom</last>
-            </names>
-            <broker>E</broker>
-            <broker>sec221</broker>
-            <address>
-                <street>1 Blue Jays Way</street>
-                <city> Toronto</city>
-                <state> ON</state>
-                <zip> M5V 1J1</zip>
-                <country> Canada</country>
-            </address>
-            <emails>
-                <email>famousdoc@who.com</email>
-                <email>tbaker@cse.unl.edu</email>
-                <email>mostfamous@whovian.com</email>
-                <email>thedoctor@bbc.com</email>
-            </emails>
-        </person>
-        <person>
-            <id>6doc</id>
-            <names>
-                <first>Hurndall</first>
-                <last> Richard</last>
-            </names>
-            <broker>J</broker>
-            <broker>sec982</broker>
-            <address>
-                <street>Campos El290</street>
-                <city>Mexico City</city>
-                <state> FD</state>
-                <zip></zip>
-                <country> Mexico</country>
-            </address>
-            <emails>
-                <email>rhurndall@cse.unl.edu</email>
-                <email>richard@unl.edu</email>
-            </emails>
-        </person>
-        <person>
-            <id>321dr</id>
-            <names>
-                <first>Baker</first>
-                <last> C.</last>
-            </names>
-            <broker>J</broker>
-            <broker>sec543</broker>
-            <address>
-                <street>Avery Hall</street>
-                <city>Lincoln</city>
-                <state>NE</state>
-                <zip>68503</zip>
-                <country>USA</country>
-            </address>
-            <emails>
-                <email>dr@baker.com</email>
-            </emails>
-        </person>
-        <person>
-            <id>1svndr</id>
-            <names>
-                <first>McCoy</first>
-                <last>Sylvester</last>
-            </names>
-            <broker></broker>
-            <address>
-                <street>126-01 Roosevelt Ave</street>
-                <city> Flushing</city>
-                <state> NY</state>
-                <zip>11368</zip>
-                <country>USA</country>
-            </address>
-            <emails>
-                <email>slyguy@hotmail.com</email>
-                <email>mccoy@whofan.com</email>
-            </emails>
-        </person>
-        <person>
-            <id>123lst</id>
-            <names>
-                <first>McGann</first>
-                <last> Paul</last>
-            </names>
-            <broker>E</broker>
-            <broker>sec31x</broker>
-            <address>
-                <street>1 MetLife Stadium Dr</street>
-                <city> East Rutherford</city>
-                <state> NJ</state>
-                <zip>07073</zip>
-                <country>USA</country>
-            </address>
-            <emails>
-                <email>pmcgann@mlb.com</email>
-                <email>foo@bar.com</email>
-                <email>pmc@unl.edu</email>
-            </emails>
-        </person>
-        <person>
-            <id>nwdoc1</id>
-            <names>
-                <first>Eccleston</first>
-                <last> Chris</last>
-            </names>
-            <broker>J</broker>
-            <broker>sec953</broker>
-            <address>
-                <street>1 E 161st St</street>
-                <city> Bronx</city>
-                <state> NY</state>
-                <zip>10451</zip>
-                <country>USA</country>
-            </address>
-            <emails>
-                <email>newguy@whovian.com</email>
-            </emails>
-        </person>
-        <person>
-            <id>2ndbestd</id>
-            <names>
-                <first>Tennant</first>
-                <last> David</last>
-            </names>
-            <broker></broker>
-            <address>
-                <street>700 E Grand Ave</street>
-                <city> Chicago</city>
-                <state> IL</state>
-                <zip> 60611</zip>
-                <country>USA</country>
-            </address>
-            <emails>
-                <email>actor@shakespeare.com</email>
-                <email>tdavid@unl.edu</email>
-            </emails>
-        </person>
-        <person>
-            <id>wrddoc</id>
-            <names>
-                <first>Smith</first>
-                <last> Matt</last>
-            </names>
-            <broker></broker>
-            <address>
-                <street>333 W 35th St</street>
-                <city> Chicago</city>
-                <state> IL</state>
-                <zip>60616</zip>
-                <country>USA</country>
-            </address>
-            <emails>
-                <email>msmith@who.com</email>
-                <email>thedoc@cse.unl.edu</email>
-            </emails>
-        </person>
-        <person>
-            <id>bbchar</id>
-            <names>
-                <first>Ehrmantraut</first>
-                <last> Kaylee</last>
-            </names>
-            <broker></broker>
-            <address>
-                <street>800 West 7th Street</street>
-                <city> Albuquerque</city>
-                <state> NM</state>
-                <zip> 87105</zip>
-                <country>USA</country>
-            </address>
-            <emails>
-                <email>N/A</email>
-            </emails>
-        </person>
-        <person>
-            <id>doc05</id>
-            <names>
-                <first>Davison</first>
-                <last> Peter</last>
-            </names>
-            <broker></broker>
-            <address>
-                <street>123 Cabo San Lucas</street>
-                <city> Los Cabos</city>
-                <state> BCS</state>
-                <zip> </zip>
-                <country> Mexico</country>
-            </address>
-            <emails>
-                <email>N/A</email>
-            </emails>
-        </person>
-    </people>
-</ns2:root>
+<ns2:persons xmlns:ns2="unl.cse">
+    <person>
+        <id>4a9g</id>
+        <firstName>Derp</firstName>
+        <lastName>Herp</lastName>
+        <address>
+            <street>7777 Sideways Trolled St.</street>
+            <city>Trolledgiston</city>
+            <state>AA</state>
+            <zip>012301</zip>
+            <country>LULZ</country>
+        </address>
+        <emails>
+            <email> derp@trolled.us</email>
+        </emails>
+    </person>
+    <person>
+        <id>dAra9</id>
+        <firstName>Sam</firstName>
+        <lastName>Dawu</lastName>
+        <address>
+            <street>1245 dawuuu Ave.</street>
+            <city>Kansas City</city>
+            <state>KS</state>
+            <zip>132677</zip>
+            <country>USA</country>
+        </address>
+        <emails>
+            <email> sam@dawus.com</email>
+            <email> samForgotPasscode@dawus.com</email>
+        </emails>
+    </person>
+    <person>
+        <id>6Gd10</id>
+        <firstName>Suzuki</firstName>
+        <lastName>Busa</lastName>
+        <address>
+            <street>123 Fast Street</street>
+            <city>Los Metro</city>
+            <state>CA</state>
+            <zip>999999</zip>
+            <country>USA</country>
+        </address>
+        <emails>
+            <email>N/A</email>
+        </emails>
+    </person>
+    <person>
+        <id>xyz7</id>
+        <firstName>Generic</firstName>
+        <lastName>Name</lastName>
+        <address>
+            <street>117 Main Street</street>
+            <city>Polis</city>
+            <state>FF</state>
+            <zip>111111</zip>
+            <country>ZZZ</country>
+        </address>
+        <emails>
+            <email> gmail@generic.person.com</email>
+        </emails>
+    </person>
+</ns2:persons>
