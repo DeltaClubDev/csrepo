@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:root xmlns:ns2="unl.cse">
+    <assets>
+        <asset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="deposits">
+            <code>AGTSAV</code>
+            <label>D</label>
+            <type>Savings Account</type>
+            <apr>0.25</apr>
+        </asset>
+        <asset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="deposits">
+            <code>BX001-23</code>
+            <label>D</label>
+            <type>Money Market Savings</type>
+            <apr>1.05</apr>
+        </asset>
+        <asset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="deposits">
+            <code>CD99312</code>
+            <label>D</label>
+            <type>5-year CD</type>
+            <apr>4.35</apr>
+        </asset>
+        <asset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="deposits">
+            <code>CD1Y3X</code>
+            <label>D</label>
+            <type>1-year Rollover CD</type>
+            <apr>2.75</apr>
+        </asset>
+        <asset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="deposits">
+            <code>RIRA01</code>
+            <label>D</label>
+            <type>Roth IRA</type>
+            <apr>3.4</apr>
+        </asset>
+        <asset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="stocks">
+            <code>GOOG001</code>
+            <label>S</label>
+            <type>Google Inc.</type>
+            <omega>-0.05</omega>
+            <quarter_dividen>0.0</quarter_dividen>
+            <share_price>814.708</share_price>
+            <stock_symbol>GOOG</stock_symbol>
+            <base_rate_return>5.6</base_rate_return>
+        </asset>
+        <asset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="stocks">
+            <code>DIAGEO12</code>
+            <label>S</label>
+            <type>Diageo PLC</type>
+            <omega>0.01</omega>
+            <quarter_dividen>12.00</quarter_dividen>
+            <share_price>122.75</share_price>
+            <stock_symbol>DEO</stock_symbol>
+            <base_rate_return>3.2</base_rate_return>
+        </asset>
+        <asset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="stocks">
+            <code>123APP</code>
+            <label>S</label>
+            <type>Apple</type>
+            <omega>-0.07</omega>
+            <quarter_dividen>24.50</quarter_dividen>
+            <share_price>429.80</share_price>
+            <stock_symbol>AAPL</stock_symbol>
+            <base_rate_return>4.3</base_rate_return>
+        </asset>
+        <asset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="stocks">
+            <code>321CC</code>
+            <label>S</label>
+            <type>Coca-Cola</type>
+            <omega>0.075</omega>
+            <quarter_dividen>5.45</quarter_dividen>
+            <share_price>41.08</share_price>
+            <stock_symbol>KO</stock_symbol>
+            <base_rate_return>3.1</base_rate_return>
+        </asset>
+        <asset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="stocks">
+            <code>No1BURR</code>
+            <label>S</label>
+            <type>Chipotle Mexican Grill</type>
+            <omega>0.0</omega>
+            <quarter_dividen>45.57</quarter_dividen>
+            <share_price>341.91</share_price>
+            <stock_symbol>CMG</stock_symbol>
+            <base_rate_return>3.19</base_rate_return>
+        </asset>
+        <asset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="stocks">
+            <code>B0oWM</code>
+            <label>S</label>
+            <type>Costco</type>
+            <omega>0.13</omega>
+            <quarter_dividen>10.00</quarter_dividen>
+            <share_price>106.13</share_price>
+            <stock_symbol>COST</stock_symbol>
+            <base_rate_return>2.25</base_rate_return>
+        </asset>
+        <asset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="stocks">
+            <code>N0TPIX</code>
+            <label>S</label>
+            <type>3D Systems</type>
+            <omega>0.08</omega>
+            <quarter_dividen>0.0</quarter_dividen>
+            <share_price>35.40</share_price>
+            <stock_symbol>DDD</stock_symbol>
+            <base_rate_return>1.25</base_rate_return>
+        </asset>
+        <asset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="stocks">
+            <code>wOOWoo1S</code>
+            <label>S</label>
+            <type>Canadian National Railway</type>
+            <omega>0.12</omega>
+            <quarter_dividen>2.75</quarter_dividen>
+            <share_price>97.75</share_price>
+            <stock_symbol>CNI</stock_symbol>
+            <base_rate_return>4.6</base_rate_return>
+        </asset>
+        <asset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="stocks">
+            <code>BERK-B</code>
+            <label>S</label>
+            <type>Berkshire Hathaway</type>
+            <omega>-0.10</omega>
+            <quarter_dividen>0.0</quarter_dividen>
+            <share_price>107.04</share_price>
+            <stock_symbol>BRK-B</stock_symbol>
+            <base_rate_return>7.2</base_rate_return>
+        </asset>
+        <asset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="privetInvest">
+            <code>RENT445</code>
+            <label>P</label>
+            <type>Rental Property</type>
+            <omega>0.15</omega>
+            <quarter_dividen>2400.00</quarter_dividen>
+            <total_value>120000</total_value>
+            <base_rate_return>0.25</base_rate_return>
+        </asset>
+        <asset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="privetInvest">
+            <code>CMPROP0121</code>
+            <label>P</label>
+            <type>Commercial Property-Red Oaks Mall</type>
+            <omega>0.25</omega>
+            <quarter_dividen>14240</quarter_dividen>
+            <total_value>10456000</total_value>
+            <base_rate_return>5.35</base_rate_return>
+        </asset>
+        <asset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="privetInvest">
+            <code>FOOD12</code>
+            <label>P</label>
+            <type>Cluckin's restaurant chain</type>
+            <omega>0.32</omega>
+            <quarter_dividen>35000.00</quarter_dividen>
+            <total_value>1212500.00</total_value>
+            <base_rate_return>3.0</base_rate_return>
+        </asset>
+        <asset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="privetInvest">
+            <code>REALStr12</code>
+            <label>P</label>
+            <type>Fred's Fabulous Hardware Store</type>
+            <omega>0.13</omega>
+            <quarter_dividen>1232</quarter_dividen>
+            <total_value>54300.00</total_value>
+            <base_rate_return>1.23</base_rate_return>
+        </asset>
+        <asset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="privetInvest">
+            <code>IND321</code>
+            <label>P</label>
+            <type>Industrial Widget Manufacturers Inc.</type>
+            <omega>-0.15</omega>
+            <quarter_dividen>10500</quarter_dividen>
+            <total_value>4213333</total_value>
+            <base_rate_return>2</base_rate_return>
+        </asset>
+        <asset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="privetInvest">
+            <code>RSTOR322</code>
+            <label>P</label>
+            <type>7&quot; Vinyl Records</type>
+            <omega>0.54</omega>
+            <quarter_dividen>2453.21</quarter_dividen>
+            <total_value>13500.00</total_value>
+            <base_rate_return>2.1</base_rate_return>
+        </asset>
+    </assets>
+</ns2:root>
