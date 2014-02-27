@@ -64,13 +64,11 @@ public class InvoicesHub {
 			if (i.getCustomCode().equals(customCode.trim())) {
 				results.add(i);
 				cflag = true;
-				break;
 			}
 			
 			if (i.getSalesCode().equals(salesCode.trim())) {
 				results.add(i);
 				sflag = true;
-				break;
 			}
 		}
 		
@@ -83,5 +81,5 @@ public class InvoicesHub {
 		}
 		
 		return results;
-	}	
+	}
 }

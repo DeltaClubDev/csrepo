@@ -35,11 +35,9 @@ public class DataConvert {
 	private final String PERSONS_XML_FILE = "data/Persons.xml";
 	private final String CUSTOMERS_XML_FILE = "data/Customers.xml";
 	private final String PRODUCTS_XML_FILE = "data/Products.xml";
-	private final String INVOICES_XML_FILE = "data/Invoices.xml";
 	private final String PERSONS_JSON_FILE = "data/Persons.json";
 	private final String PRODUCTS_JSON_FILE = "data/Products.json";
 	private final String CUSTOMERS_JSON_FILE = "data/Customers.json";
-	private final String INVOICES_JSON_FILE = "data/Invoices.json";
 	private PersonsHub phub = new PersonsHub();
 	private ProductsHub prhub = new ProductsHub();
 	private CustomersHub chub = new CustomersHub();
@@ -54,7 +52,7 @@ public class DataConvert {
 	 * @param jsonOut - If true, will output JSON in the console
 	 * @param genJson - If true, will generate an JSON file
 	 */
-	public DataConvert(boolean xmlOut, boolean genXML, boolean jsonOut, boolean genJson) {
+	public DataConvert(boolean xmlOut, boolean genXML, boolean jsonOut, boolean genJson, boolean genTxt) {
 
 		System.out.println("Parsing Persons data file...");
 		parsePersonsDat();
@@ -62,7 +60,7 @@ public class DataConvert {
 		parseCustomersDat();
 		System.out.println("Parsing Product data file...");
 		parseProductsDat();
-		System.out.println("Parsing Product data file...");
+		System.out.println("Parsing Invoice data file...");
 		parseInvoicesDat();
 		
 
@@ -72,7 +70,6 @@ public class DataConvert {
 			parsePersonsXml(xmlOut);
 			parseCustomersXml(xmlOut);
 			parseProductsXml(xmlOut);
-			parseInvoicesXml(xmlOut);
 			System.out.println("Conversion complete");
 		}
 
@@ -82,7 +79,12 @@ public class DataConvert {
 			parsePersonsJson(jsonOut);
 			parseCustomersJson(jsonOut);
 			parseProductsJson(jsonOut);
-			parseInvoicesJson(jsonOut);
+			System.out.println("Conversion complete");
+		}
+		
+		if (genTxt == true) {
+			System.out.println("\n**** Generating Invoices ****");
+			parseInvoicesTxt();
 			System.out.println("Conversion complete");
 		}
 	}
@@ -411,66 +413,280 @@ public class DataConvert {
 
 		}
 	}
-	
-	
-	/**
-	 * <i>parsePersonsXml</i> will generate an XML file using the parsed
-	 * data from the old system.
-	 * 
-	 * @param xmlOut - If true, will output the XML in the console
-	 */
-	public void parseInvoicesXml(boolean xmlOut) {
+
+	public void parseInvoicesTxt() {
+		System.out.println("~=====================~");
+		System.out.println("| Summary of Invoices |");
+		System.out.println("~=====================~");
 		
-		System.out.println("Generating XML file: " + INVOICES_XML_FILE +"\n");
-		try {
-			JAXBContext cont = JAXBContext.newInstance(InvoicesHub.class);
-			Marshaller marsh = cont.createMarshaller();
-			marsh.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-			File f = new File(INVOICES_XML_FILE);
-			marsh.marshal(ihub, f);
-			if (xmlOut == true) {
-				marsh.marshal(ihub, System.out);
+		//Printing Table Header for Invoice Summary
+		System.out.print("\n+------+"); //ID
+		System.out.print("----------------------------------------------+"); //Customer
+		System.out.print("------------------------------+"); // Sales person
+		System.out.print("-------------+"); // Subtotal
+		System.out.print("-------------+"); // Fees
+		System.out.print("-------------+"); // Taxes
+		System.out.print("-------------+\n"); // Total
+		
+		System.out.print("|");
+		System.out.printf("%2s%2s%2s","","ID","");
+		System.out.print("|");
+		
+		System.out.printf("%19s%8s%19s","", "Customer", "");
+		System.out.print("|");
+		
+		System.out.printf("%9s%12s%9s", "", "Sales person", "");
+		System.out.printf("|");
+		
+		System.out.printf("%2s%8s%3s", "", "Subtotal", "");
+		System.out.print("|");
+		
+		System.out.printf("%4s%4s%5s", "", "Fees", "");
+		System.out.print("|");
+		
+		System.out.printf("%4s%5s%4s", "", "Taxes", "");
+		System.out.print("|");
+		
+		System.out.printf("%4s%5s%4s", "", "Total", "");
+		System.out.print("|\n");
+		
+		System.out.print("+------+"); //ID
+		System.out.print("----------------------------------------------+"); //Customer
+		System.out.print("------------------------------+"); // Sales person
+		System.out.print("-------------+"); // Subtotal
+		System.out.print("-------------+"); // Fees
+		System.out.print("-------------+"); // Taxes
+		System.out.print("-------------+\n"); // Total
+		
+		// Iterate through Invoice list and print summary details
+		for (Invoices i : ihub.getCollection()) {
+			double size = 0.0;
+			System.out.print("|");
+			System.out.print(i.getInCode());
+			
+			//Company name
+			String company = chub.getCompName(i.getCustomCode());
+			size = company.length();
+			int align = 0;
+			if (((46.0 - size) / 2.0) != (Math.floor((46.0 - size) / 2.0))) {
+				align = 1;
 			}
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		}
-	}
+			String format = "%"+(Math.floor((((46 - company.length()) / 2)+align)))+"s%"+company.length()+"s%"+
+			(Math.floor(((46 - company.length()) / 2)))+"s";
+			System.out.print("|");
+			System.out.printf(format, "", company, "");
+			
+			//Sales person name
+			String name = phub.getLastName(i.getSalesCode())+" "+phub.getFirstName(i.getSalesCode());
+			size = name.length();
+			align = 0;
+			if (((30.0 - size) / 2.0) != (Math.floor((30.0 - size) / 2.0))) {
+				align = 1;
+			}
+			format = "%"+(Math.floor((((30 - name.length()) / 2)+align)))+"s%"+name.length()+"s%"+
+			(Math.floor(((30 - name.length()) / 2)))+"s";
+			System.out.print("|");
+			System.out.printf(format, "", name, "");
+			
+			//Subtotal
+			double subtotal = i.getSubTotal();
+			String subtotalF = "N/A";
+			try {
+				subtotalF = String.format("%.2f", subtotal).trim();
+			} catch (Exception e) {
+				//e.printStackTrace();
+			}
+			size = subtotalF.length();
+			align = 0;
+			
+			if (((12.0 - size) / 2.0) != (Math.floor((12.0 - size) / 2.0))) {
+				align = 1;
+			}
 
-	/**
-	 * <i>parsePersonsJson</i> will generate an JSON file using the parsed
-	 * data from the old system.
-	 * 
-	 * @param jsonOut - If true, the JSON file will be displayed in the console
-	 */
-	private void parseInvoicesJson(boolean jsonOut) {
-		
-		System.out.println("Generating JSON file: " + INVOICES_JSON_FILE +"\n");
-	    GsonBuilder gsonBuilder = new GsonBuilder();
-	    gsonBuilder.setPrettyPrinting().disableHtmlEscaping();
-	    Gson gson = gsonBuilder.create();
-	    String json = gson.toJson(ihub);
-		
-	    if (jsonOut == true) {
-	    	System.out.println(json);
-	    }
-	    
-	    FileWriter f = null;
-		try {
-			f = new FileWriter(INVOICES_JSON_FILE);
-			f.write(json);
-			f.flush();
-			f.close();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-	}
+			format = "%"+(Math.floor((((12 - subtotalF.length()) / 2)+align)))+"s%"+subtotalF.length()+"s%"+
+			(Math.floor(((12 - subtotalF.length()) / 2)))+"s";
+			System.out.print("|");
+			
+			try {
+				System.out.printf(format, "", "$"+subtotalF, "");
+			} catch (Exception e) {
+				System.out.printf("%3s %3s %3s", "", "N/A", "");
+			}
+			
+			//Fees
+			boolean complyFee = i.getHasComplyFee();
+			double fee = i.getFee();
+			
+			if (complyFee == true) {
+				fee += 125.00;
+			}
+			String feeF = "N/A";
+			try {
+				feeF = String.format("%.2f", fee).trim();
+			} catch (Exception e) {
+				//e.printStackTrace();
+			}
+			size = feeF.length();
+			align = 0;
+			
+			if (((12.0 - size) / 2.0) != (Math.floor((12.0 - size) / 2.0))) {
+				align = 1;
+			}
 
+			format = "%"+(Math.floor((((12 - feeF.length()) / 2)+align)))+"s%"+feeF.length()+"s%"+
+			(Math.floor(((12 - feeF.length()) / 2)))+"s";
+			System.out.print("|");
+			
+			try {
+				System.out.printf(format, "", "$"+feeF, "");
+			} catch (Exception e) {
+				System.out.printf("%3s %3s %3s", "", "N/A", "");
+			}
+			
+			//Taxes
+			double taxes = 0.00;
+			
+			if (complyFee == false) {
+				taxes = i.getTaxes();
+			}
+			
+			String taxF = "N/A";
+			try {
+				taxF = String.format("%.2f", taxes).trim();
+			} catch (Exception e) {
+				//e.printStackTrace();
+			}
+			size = taxF.length();
+			align = 0;
+			
+			if (((12.0 - size) / 2.0) != (Math.floor((12.0 - size) / 2.0))) {
+				align = 1;
+			}
+
+			format = "%"+(Math.floor((((12 - taxF.length()) / 2)+align)))+"s%"+taxF.length()+"s%"+
+			(Math.floor(((12 - taxF.length()) / 2)))+"s";
+			System.out.print("|");
+			
+			try {
+				System.out.printf(format, "", "$"+taxF, "");
+			} catch (Exception e) {
+				System.out.printf("%3s %3s %3s", "", "N/A", "");
+			}
+			
+			//Total
+			double total = subtotal + fee + taxes;
+			String totalF = "N/A";
+			try {
+				totalF = String.format("%.2f", total).trim();
+			} catch (Exception e) {
+				//e.printStackTrace();
+			}
+			size = totalF.length();
+			align = 0;
+			
+			if (((12.0 - size) / 2.0) != (Math.floor((12.0 - size) / 2.0))) {
+				align = 1;
+			}
+
+			format = "%"+(Math.floor((((12 - totalF.length()) / 2)+align)))+"s%"+totalF.length()+"s%"+
+			(Math.floor(((12 - totalF.length()) / 2)))+"s";
+			System.out.print("|");
+			
+			try {
+				System.out.printf(format, "", "$"+totalF, "");
+			} catch (Exception e) {
+				System.out.printf("%3s %3s %3s", "", "N/A", "");
+			}
+			System.out.print("|");
+			
+			
+			System.out.print("\n");
+			System.out.print("+------+"); //ID
+			System.out.print("----------------------------------------------+"); //Customer
+			System.out.print("------------------------------+"); // Sales person
+			System.out.print("-------------+"); // Subtotal
+			System.out.print("-------------+"); // Fees
+			System.out.print("-------------+"); // Taxes
+			System.out.print("-------------+\n"); // Total
+		}
+				
+		System.out.print("\n");
+		System.out.println("~============================~");
+		System.out.println("| Individual Invoice Reports |");
+		System.out.println("~============================~");
+		System.out.print("\n");
+
+		// Iterate through Invoice list and print details
+		for (Invoices i : ihub.getCollection()) {
+			System.out.println("++--------++");
+			System.out.printf("%3s%6s%3s", "|| ", i.getInCode()," ||\n");
+			System.out.println("++--------++");
+			
+			String name = phub.getLastName(i.getSalesCode())+" "+phub.getFirstName(i.getSalesCode());
+			System.out.printf("\n\t%14s%-30s", "Sales person: ", name);
+			System.out.print("\n");
+			
+			String company = chub.getCompName(i.getCustomCode());
+			System.out.println("\t[]---------------[]");
+			System.out.printf("\t%3s%13s%3s", "|| ", "Customer Data"," ||\n");
+			System.out.println("\t[]---------------[]\n\t:");
+			System.out.printf("\t%1s==> %-10s%-46s\n", ":", "Name: ", company+" ("+i.getCustomCode()+")");
+	
+			//customer data
+			List<Address> tempAddr = new ArrayList<Address>();
+			List<Persons> tempDude = new ArrayList<Persons>();
+			tempAddr = chub.getCompAddr(i.getCustomCode());
+			tempDude = chub.getHumanRep(i.getCustomCode());
+			String street = "N/A";
+			String city = "N/A";
+			String country = "N/A";
+			String state = "N/A";
+			String zip = "N/A";
+			String firstName = "N/A";
+			String lastName = "N/A";
+			String dudeId = "N/A";
+			for (Address s : tempAddr) {
+				street = s.getStreet();
+				city = s.getCity();
+				country = s.getCountry();
+				state = s.getState();
+				zip = s.getZip();
+			}
+			for (Persons p : tempDude) {
+				firstName = p.getFirstName();
+				lastName = p.getLastName();
+				dudeId = p.getId();
+			}
+			System.out.printf("\t%1s==> %-10s%-46s\n", ":", "Country: ", country);
+			System.out.printf("\t%1s==> %-10s%-46s\n", ":", "State: ", state);
+			System.out.printf("\t%1s==> %-10s%-46s\n", ":", "City: ", city);
+			System.out.printf("\t%1s==> %-10s%-46s\n", ":", "Street: ", street);
+			System.out.printf("\t%1s==> %-10s%-46s\n\t:\n", ":", "Zip Code: ", zip);
+			System.out.printf("\t%1s=====> %-16s%-46s\n", ":", "Human Resource: ", lastName+", "+firstName+" ("+dudeId+")");
+			System.out.print("\n");
+			
+			//invoice data
+			System.out.println("\t[]---------------[]");
+			System.out.printf("\t%3s%12s%3s", "|| ", "Invoice Data"," ||\n");
+			System.out.println("\t[]---------------[]\n\t:");
+			
+			List<String> codes = i.getCodes(i.getCustomCode());
+			for (String c : codes) {
+				System.out.printf("\t%1s==> %-10s%-46s\n", ":", "Code: ", c);
+				System.out.printf("\t%1s==> %-10s%-46s\n\t:\n", ":", "Product: ", prhub.getNameById(c));
+				//System.out.printf("\t%1s=====> %-7s%-14s%-7s%-14s\n\t:\n", ":", "Fee: ", i.getFee(), "Total: ", "7");
+			}
+			
+			System.out.print("\n");
+		}
+		
+	}
+		
 	/**
 	 * <i>parsePersonsDat</i> will take the data from the old system
-	 * and generate an instance of a person based on the business model
+	 * and generate an instance of an <b>Invoice</b> based on the business model
 	 */
 	public void parseInvoicesDat() {
-		
 		Scanner s = null;
 		try {
 			s = new Scanner(new File(INVOICES_DATA_FILE));
@@ -478,68 +694,66 @@ public class DataConvert {
 			e.printStackTrace();
 		}
 
+		s.nextLine();
 		String line = null;
 		try {
 			while (!(line = s.nextLine()).isEmpty()) {
-				
 				String tokens[] = line.split(";");
+				String inCode = tokens[0]; //invoiceCode
+				String customCode = tokens[1]; //customers code
+				String salesCode = tokens[2]; //salesCode
+				String[] prodString = tokens[3].split(",");
+				List<String> prodList = Arrays.asList(prodString);
 				
-				if(tokens.length > 2){
-					
-					String inCode = tokens[0]; //invoiceCode
-					String customCode = tokens[1]; //customers code
-					String salesCode = tokens[2]; //salesCode
-					String[] prodString = tokens[3].split(",");
-					List<String> prodList = Arrays.asList(prodString);
+				Invoices i = new Invoices();
+				i.setInCode(inCode);
+				i.setCustomCode(customCode);
+				char customType = chub.getCompType(customCode);
+				i.setCustomType(customType);
+				i.setSalesCode(salesCode);
 				
-					Invoices i = new Invoices(prodList);
-					i.setInCode(inCode);
-					i.setCustomCode(customCode);
-					i.setSalesCode(salesCode);
-					//i.setProdList(prodList);
-					
-					
+				if (customType == 'G') {
+					i.setHasComplyFee(true);
+				} else {
+					i.setHasComplyFee(false);
 				}
+				
+				for (String prods : prodList) {
+					List<String> info = Arrays.asList(prods.split(":"));
+					
+					if(info.size() == 3) {
+						i.setProdLicense(prhub.getLiceYrPrice(info.get(0)),prhub.getLicePrice(info.get(0)), info, customType);
+					} else {
+						if (!(prhub.getConsultListById(info.get(0)).isEmpty())) {
+							i.setProdConsult(prhub.getConsultPrice(info.get(0)), info, customType);
+						} else if (!(prhub.getEquipListById(info.get(0)).isEmpty())){
+							i.setProdEquip(prhub.getEquipPrice(info.get(0)), info, customType);
+						} else {
+							System.out.println("Error: Product ID not found for: "+info.get(0));
+						}
+					}
+				}
+				ihub.addInvoices(i);
 			}
 		} catch (Exception e) {
 
 		}
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 	/**
-	 * Main method, will be moved in phase 2!
+	 * Main method, will be moved in phase 3!
 	 * 
 	 * @param args - This parameter is not used
 	 */
 	public static void main(String[] args) {
 		
 		boolean XML_CONSOLE_OUTPUT = false;
-		boolean XML_GENERATE_DATA = true;
+		boolean XML_GENERATE_DATA = false;
 		boolean JSON_CONSOLE_OUTPUT = false;
-		boolean JSON_GENERATE_DATA = true;
+		boolean JSON_GENERATE_DATA = false;
+		boolean TXT_GENERATE_DATA = true;
 
 		new DataConvert(XML_CONSOLE_OUTPUT, XML_GENERATE_DATA,
-				JSON_CONSOLE_OUTPUT, JSON_GENERATE_DATA);
+				JSON_CONSOLE_OUTPUT, JSON_GENERATE_DATA, TXT_GENERATE_DATA);
 	}
 }

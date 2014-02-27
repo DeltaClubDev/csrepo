@@ -70,6 +70,26 @@ public class ProductsHub {
 		return Collections.unmodifiableList(this.equipList);
 	}
 	
+	public List<Equipment> getEquipListById(String id) {
+		List<Equipment> results = new ArrayList<Equipment>();
+		for (Equipment e : this.equipList) {
+			if (id.equals(e.getCode())) {
+				results.add(e);
+			}
+		}
+		return results;
+	}
+	
+	public double getEquipPrice (String id) {
+		double result = 0.0;
+		for (Equipment e : this.equipList) {
+			if (id.equals(e.getCode())) {
+				result = e.getUnitPrice();
+			}
+		}
+		return result;
+	}
+	
 	/**
 	 * 
 	 * @return - Returns an <i>unmodifiableList</i> of all the <b>Consultation</b> instances
@@ -78,11 +98,90 @@ public class ProductsHub {
 		return Collections.unmodifiableList(this.consultationList);
 	}
 	
+	public List<Consultation> getConsultListById(String id) {
+		List<Consultation> results = new ArrayList<Consultation>();
+		for (Consultation c : this.consultationList) {
+			if (id.equals(c.getCode())) {
+				results.add(c);
+			}
+		}
+		return results;
+	}
+	
+	public double getConsultPrice (String id) {
+		double result = 0.0;
+		for (Consultation c : this.consultationList) {
+			if (id.equals(c.getCode())) {
+				result = c.getHourPrice();
+			}
+		}
+		return result;
+	}
 	/**
 	 * 
 	 * @return - Returns an <i>unmodifiableList</i> of all the <b>License</b> instances
 	 */
 	public List<License> getLiceList() {
 		return Collections.unmodifiableList(this.liceList);
+	}
+	
+	public List<License> getLiceListById(String id) {
+		List<License> results = new ArrayList<License>();
+		for (License l : this.liceList) {
+			if (id.equals(l.getCode())) {
+				results.add(l);
+			}
+		}
+		return results;
+	}
+	
+	public double getLiceYrPrice(String id) {
+		double result = 0.0;
+		for(License l : this.liceList) {
+			if (id.equals(l.getCode())) {
+				result = l.getAnnualPrice();
+			}
+		}
+		return result;
+	}
+	
+	public double getLicePrice(String id) {
+		double result = 0.0;
+		for(License l : this.liceList) {
+			if (id.equals(l.getCode())) {
+				result = l.getPrice();
+			}
+		}
+		return result;
+	}
+	
+	public String getNameById(String id) {
+		String result = "N/A";
+		boolean found = false;
+		for(License l : this.liceList) {
+			if (id.equals(l.getCode())) {
+				result = l.getName();
+				found = true;
+			}
+		}
+		
+		if (found == false) {
+			for (Consultation c : this.consultationList) {
+				if (id.equals(c.getCode())) {
+					result = c.getName();
+					found = true;
+				}
+			}
+		}
+		
+		if (found == false) {
+			for (Equipment e : this.equipList) {
+				if (id.equals(e.getCode())) {
+					result = e.getName();
+					found = true;
+				}
+			}
+		}
+		return result;
 	}
 }

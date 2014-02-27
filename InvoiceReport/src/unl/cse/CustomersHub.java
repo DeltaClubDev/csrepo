@@ -63,6 +63,97 @@ public class CustomersHub {
 		return Collections.unmodifiableList(this.govList);
 	}
 	
+	public char getCompType(String id) {
+		boolean found = false;
+		char result = 'E';
+		for (GovComp g : this.govList) {
+			if (id.equals(g.getCode())) {
+				result = 'G';
+				found = true;
+			}
+		}
+		
+		if (found == false) {
+			for (PubComp pc : this.pubList) {
+				if (id.equals(pc.getCode())) {
+					result = 'C';
+					found = true;
+				}
+			}
+		}
+		
+		if (found == false) {
+			System.out.println("Error: Customer code "+id+" not found!");
+		}
+		return result;
+	}
+	
+	public String getCompName(String id) {
+		boolean found = false;
+		String result = "N/A";
+		for (GovComp g : this.govList) {
+			if (id.equals(g.getCode())) {
+				result = g.getName();
+				found = true;
+			}
+		}
+		
+		if (found == false) {
+			for (PubComp pc : this.pubList) {
+				if (id.equals(pc.getCode())) {
+					result = pc.getName();
+					found = true;
+				}
+			}
+		}
+		
+		if (found == false) {
+			System.out.println("Error: Customer code "+id+" not found!");
+		}
+		return result;
+	}
+	
+	public List<Address> getCompAddr(String id) {
+		List<Address> result = new ArrayList<Address>();
+		boolean found = false;
+		for (GovComp g : this.govList) {
+			if (id.equals(g.getCode())) {
+				result.addAll(g.getAddress());
+				found = true;
+			}
+		}
+		if (found == false) {
+			for (PubComp pc : this.pubList) {
+				if (id.equals(pc.getCode())) {
+					result.addAll(pc.getAddress());
+					found = true;
+				}
+			}
+		}
+		return result;
+	}
+	
+	public List<Persons> getHumanRep(String id) {
+		List<Persons> result = new ArrayList<Persons>();
+		boolean found = false;
+		for (GovComp g : this.govList) {
+			if (id.equals(g.getCode())) {
+				result.addAll(g.getHumanRep());
+				found = true;
+			}
+		}
+		
+		if (found == false) {
+			for (PubComp pc : this.pubList) {
+				if (id.equals(pc.getCode())) {
+					result.addAll(pc.getHumanRep());
+					found = true;
+				}
+			}
+		}
+		return result;
+	}
+	
 	/**
 	 * 
 	 * @return - Returns an <i>unmodifiableList</i> of all the <b>PubComp</b> instances

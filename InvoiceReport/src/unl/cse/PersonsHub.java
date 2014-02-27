@@ -60,7 +60,6 @@ public class PersonsHub {
 			if (p.getId().equals(id.trim())) {
 				results.add(p);
 				flag = true;
-				break;
 			}
 		}
 		
@@ -78,7 +77,6 @@ public class PersonsHub {
 			if(p.getId().equals(id.trim())) {
 				result = p.getLastName();
 				flag = true;
-				break;
 			}			
 		}
 		
@@ -96,7 +94,6 @@ public class PersonsHub {
 			if(p.getId().equals(id.trim())) {
 				result = p.getFirstName();
 				flag = true;
-				break;
 			}			
 		}
 		
@@ -106,7 +103,4 @@ public class PersonsHub {
 		
 		return result;
 	}
-	
-	
-	
 }

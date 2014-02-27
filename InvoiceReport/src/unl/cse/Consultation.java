@@ -22,7 +22,7 @@ public class Consultation {
 	
 	private String code;
 	private String name;
-	public Double hourPrice;
+	public double hourPrice;
 	
 	@XmlElement(name="consultant")
 	private final ArrayList<Persons> consultList;
@@ -57,7 +57,7 @@ public class Consultation {
 	 */
 	@XmlElement(name="hourPrice")
 	public void setHourPrice(String hourPrice) {
-		Double temp;
+		double temp;
 		
 		if (hourPrice == null) {
 			hourPrice = "0.0";
@@ -102,7 +102,7 @@ public class Consultation {
 	 * 
 	 * @return - Returns a Double
 	 */
-	public Double getHourPrice() {
+	public double getHourPrice() {
 		return hourPrice;
 	}
 	

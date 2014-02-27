@@ -19,10 +19,10 @@ public class License {
 
 	private String code;
 	private String name;
-	public Double price;
-	public Double annualPrice;
+	public double price;
+	public double annualPrice;
 	
-	public License() { }
+	public License() {}
 	
 	/**
 	 * 
@@ -50,7 +50,7 @@ public class License {
 	 */
 	@XmlElement(name="price")
 	public void setPrice(String price) {
-		Double temp;
+		double temp;
 		
 		if (price == null) {
 			price = "0.0";
@@ -73,7 +73,7 @@ public class License {
 	 */
 	@XmlElement(name="annualPrice")
 	public void setAnnualPrice(String annualPrice) {
-		Double temp;
+		double temp;
 		
 		if (annualPrice == null) {
 			annualPrice = "0.0";
@@ -108,7 +108,7 @@ public class License {
 	 * 
 	 * @return - Returns a Double
 	 */
-	public Double getPrice() {
+	public double getPrice() {
 		return price;
 	}
 	
@@ -116,7 +116,7 @@ public class License {
 	 * 
 	 * @return - Returns a Double
 	 */
-	public Double getAnnualPrice() {
+	public double getAnnualPrice() {
 		return annualPrice;
 	}
 }
