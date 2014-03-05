@@ -10,6 +10,7 @@ public class LicensePay {
 	private double taxed;
 	private double cost;
 	private double fee;
+	private String info;
 	
 	public LicensePay() {}
 	
@@ -45,6 +46,10 @@ public class LicensePay {
 		this.fee = fee;
 	}
 	
+	public void setInfo(String info) {
+		this.info = info;
+	}
+	
 	public String getCode() {
 		return this.code;
 	}
@@ -75,5 +80,9 @@ public class LicensePay {
 	
 	public double getFee() {
 		return this.fee;
+	}
+	
+	public String getInfo() {
+		return this.info;
 	}
 }

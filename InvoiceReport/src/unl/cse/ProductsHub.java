@@ -155,12 +155,12 @@ public class ProductsHub {
 		return result;
 	}
 	
-	public String getNameById(String id) {
-		String result = "N/A";
+	public char getType(String id) {
+		char result = 'X';
 		boolean found = false;
 		for(License l : this.liceList) {
 			if (id.equals(l.getCode())) {
-				result = l.getName();
+				result = 'L';
 				found = true;
 			}
 		}
@@ -168,7 +168,7 @@ public class ProductsHub {
 		if (found == false) {
 			for (Consultation c : this.consultationList) {
 				if (id.equals(c.getCode())) {
-					result = c.getName();
+					result = 'C';
 					found = true;
 				}
 			}
@@ -177,8 +177,32 @@ public class ProductsHub {
 		if (found == false) {
 			for (Equipment e : this.equipList) {
 				if (id.equals(e.getCode())) {
-					result = e.getName();
+					result = 'E';
 					found = true;
+				}
+			}
+		}
+		return result;
+	}
+	
+	public String getNameById(String id, char type) {
+		String result = "N/A";
+		if (type == 'L') {
+			for(License l : this.liceList) {
+				if (id.equals(l.getCode())) {
+					result = l.getName();
+				}
+			}
+		} else if (type == 'C') {
+			for (Consultation c : this.consultationList) {
+				if (id.equals(c.getCode())) {
+					result = c.getName();
+				}
+			}
+		} else if (type == 'E') {
+			for (Equipment e : this.equipList) {
+				if (id.equals(e.getCode())) {
+					result = e.getName();
 				}
 			}
 		}

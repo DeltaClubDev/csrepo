@@ -46,40 +46,4 @@ public class InvoicesHub {
 	public List<Invoices> getCollection() {
     	return Collections.unmodifiableList(this.invoicesList);
 	}
-	
-	/**
-	 * <i>getInvoiceInfo</i> is specifically used to match a Customer's Code with
-	 * an existing customer and a SalesPerson's Code with an existing Sales person
-	 * from the <b>Invoices</b> Object stored in the
-	 * <b>InvoicesHub</b> ArrayList
-	 * 
-	 * @param customCode, salesCode - These codes are used to find a specific Customer and salesPerson
-	 * @return - Returns an ArrayList of an entire <b>Persons</b> Object
-	 */
-	public List<Invoices> getInvoiceInfo(String customCode, String salesCode) {
-		boolean cflag = false; //flag for customers
-		boolean sflag = false; //flag for salesPersons
-		List<Invoices> results = new ArrayList<Invoices>();
-		for(Invoices i : this.invoicesList) {
-			if (i.getCustomCode().equals(customCode.trim())) {
-				results.add(i);
-				cflag = true;
-			}
-			
-			if (i.getSalesCode().equals(salesCode.trim())) {
-				results.add(i);
-				sflag = true;
-			}
-		}
-		
-		if (cflag == false) {
-			System.out.println("Error: Customer owner not found: "+customCode); //not sure how to reword this.
-		}
-		
-		if (sflag == false) {
-			System.out.println("Error: Sales Person owner not found: "+salesCode); //not sure how to reword this.
-		}
-		
-		return results;
-	}
 }

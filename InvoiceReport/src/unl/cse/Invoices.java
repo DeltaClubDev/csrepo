@@ -1,18 +1,10 @@
 package unl.cse;
 
-import java.text.SimpleDateFormat;
+import java.text.SimpleDateFormat; 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 
 /**
  * The <b>Address</b> class was designed to be used for multiple types
@@ -21,20 +13,24 @@ import javax.xml.bind.annotation.XmlType;
  * 
  * @author Jacob Charles
  * @author Alexis Kennedy
- * @version 0.1.0
+ * @version 0.2.0
  */
 public class Invoices {
 	private String inCode;
 	private String customCode;
 	private String salesCode;
 	private char customType;
-	private PayHub payHub;
 	private boolean hasComplyFee;
 	
+	private final List<LicensePay> liceList;
+	private final List<EquipmentPay> equipList;
+	private final List<ConsultPay> consultList;
 	private List<String> prodList = new ArrayList<String>();
 	
 	public Invoices() {
-		this.payHub = new PayHub();
+		this.liceList = new ArrayList<LicensePay>();
+		this.equipList = new ArrayList<EquipmentPay>();
+		this.consultList = new ArrayList<ConsultPay>();
 	}
 
 	/**
@@ -135,7 +131,8 @@ public class Invoices {
 		
 		lp.setTaxed(taxed);
 		lp.setCost(cost);
-		payHub.addLicense(lp);
+		lp.setInfo(days+" days at $"+annualPrice+"/yr");
+		liceList.add(lp);
 	}
 	
 	public void setProdConsult(double price, List<String> info, char type) {
@@ -163,7 +160,8 @@ public class Invoices {
 		cp.setTotal(total);
 		cp.setCost(cost);
 		cp.setTaxed(taxed);
-		payHub.addConsult(cp);
+		cp.setInfo(hours+" hrs at $"+price+"/hr");
+		consultList.add(cp);
 	}
 	
 	public void setProdEquip(double price, List<String> info, char type) {
@@ -190,7 +188,8 @@ public class Invoices {
 		ep.setUnits(units);
 		ep.setCost(cost);
 		ep.setTaxed(taxed);
-		payHub.addEquip(ep);
+		ep.setInfo(units+" units at $"+price+"/unit");
+		equipList.add(ep);
 	}
 	
 	public char getCustomType() {
@@ -207,15 +206,15 @@ public class Invoices {
 	
 	public double getSubTotal() {
 		double result = 0.00;
-		for (LicensePay ph : payHub.getLiceList()) {
+		for (LicensePay ph : getLiceList()) {
 			result += ph.getTotal();
 		}
 		
-		for (EquipmentPay ph : payHub.getEquipList()) {
+		for (EquipmentPay ph : getEquipList()) {
 			result += ph.getTotal();
 		}
 		
-		for (ConsultPay ph : payHub.getConsultList()) {
+		for (ConsultPay ph : getConsultList()) {
 			result += ph.getTotal();
 		}
 		return result;
@@ -223,27 +222,89 @@ public class Invoices {
 	
 	public double getFee() {
 		double result = 0.0;
-		for (LicensePay ph : payHub.getLiceList()) {
+		for (LicensePay ph : getLiceList()) {
 			result += ph.getFee();
 		}
 		
-		for (ConsultPay ph : payHub.getConsultList()) {
+		for (ConsultPay ph : getConsultList()) {
 			result += 150.00;
+		}
+		return result;
+	}
+	
+	public double getProductFee(String id, char type) {
+		double result = 0.0;
+		if (type == 'L') {
+			for (LicensePay lp : liceList) {
+				if (id.equals(lp.getCode())) {
+					result = lp.getFee();
+				}
+			}			
+		} else if (type == 'C') {
+			result = 150.00;
+		}
+		return result;
+	}
+	
+	public double getProductTot(String id, char type) {
+		double result = 0.0;
+		if (type == 'E') {
+			for (EquipmentPay e : equipList) {
+				if (id.equals(e.getCode())) {
+					result = e.getTotal();
+				}
+			}
+		} else if (type == 'L') {
+			for (LicensePay lp : liceList) {
+				if (id.equals(lp.getCode())) {
+					result = lp.getTotal();
+				}
+			}			
+		} else if (type == 'C') {
+			for (ConsultPay cp : consultList) {
+				if (id.equals(cp.getCode())) {
+					result = cp.getTotal();
+				}
+			}
+		}
+		return result;
+	}
+	
+	public double getProductTax(String id, char type) {
+		double result = 0.0;
+		if (type == 'E') {
+			for (EquipmentPay e : equipList) {
+				if (id.equals(e.getCode())) {
+					result = e.getTaxed();
+				}
+			}
+		} else if (type == 'L') {
+			for (LicensePay lp : liceList) {
+				if (id.equals(lp.getCode())) {
+					result = lp.getTaxed();
+				}
+			}			
+		} else if (type == 'C') {
+			for (ConsultPay cp : consultList) {
+				if (id.equals(cp.getCode())) {
+					result = cp.getTaxed();
+				}
+			}
 		}
 		return result;
 	}
 	
 	public double getTaxes() {
 		double result = 0.0;
-		for (LicensePay ph : payHub.getLiceList()) {
+		for (LicensePay ph : getLiceList()) {
 			result += ph.getTaxed();
 		}
 		
-		for (EquipmentPay ph : payHub.getEquipList()) {
+		for (EquipmentPay ph : getEquipList()) {
 			result += ph.getTaxed();
 		}
 		
-		for (ConsultPay ph : payHub.getConsultList()) {
+		for (ConsultPay ph : getConsultList()) {
 			result += ph.getTaxed();
 		}
 		return result;
@@ -251,16 +312,64 @@ public class Invoices {
 	
 	public List<String> getCodes(String id) {
 		List<String> result = new ArrayList<String>();
-		for (LicensePay ph : payHub.getLiceList()) {
+		for (LicensePay ph : getLiceList()) {
 			result.add(ph.getCode());
 		}
-		for (EquipmentPay ph : payHub.getEquipList()) {
+		for (EquipmentPay ph : getEquipList()) {
 			result.add(ph.getCode());
 		}
 		
-		for (ConsultPay ph : payHub.getConsultList()) {
+		for (ConsultPay ph : getConsultList()) {
 			result.add(ph.getCode());
 		}
 		return result;
+	}
+	
+	public String getPayInfo(String id, char type) {
+		String result = "N/A";
+		if (type == 'E') {
+			for (EquipmentPay e : equipList) {
+				if (id.equals(e.getCode())) {
+					result = e.getInfo();
+				}
+			}
+		} else if (type == 'L') {
+			for (LicensePay lp : liceList) {
+				if (id.equals(lp.getCode())) {
+					result = lp.getInfo();
+				}
+			}			
+		} else if (type == 'C') {
+			for (ConsultPay cp : consultList) {
+				if (id.equals(cp.getCode())) {
+					result = cp.getInfo();
+				}
+			}
+		}
+		return result;
+	}
+	
+	public void addLicense(LicensePay newLicense) {
+		this.liceList.add(newLicense);
+	}
+	
+	public void addEquip(EquipmentPay newEquip) {
+		this.equipList.add(newEquip);
+	}
+	
+	public void addConsult(ConsultPay newConsult) {
+		this.consultList.add(newConsult);
+	}
+	
+	public List<LicensePay> getLiceList() {
+		return Collections.unmodifiableList(this.liceList);
+	}
+	
+	public List<EquipmentPay> getEquipList() {
+		return Collections.unmodifiableList(this.equipList);
+	}
+	
+	public List<ConsultPay> getConsultList() {
+		return Collections.unmodifiableList(this.consultList);
 	}
 }

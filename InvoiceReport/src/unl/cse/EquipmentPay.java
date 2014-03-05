@@ -6,6 +6,7 @@ public class EquipmentPay {
 	private double total;
 	private double taxed;
 	private double cost;
+	private String info;
 	
 	public EquipmentPay() {}
 
@@ -29,6 +30,10 @@ public class EquipmentPay {
 		this.cost = cost;
 	}
 	
+	public void setInfo(String info) {
+		this.info = info;
+	}
+	
 	public String getCode() {
 		return this.code;
 	}
@@ -47,5 +52,9 @@ public class EquipmentPay {
 	
 	public double getCost() {
 		return this.cost;
+	}
+	
+	public String getInfo() {
+		return this.info;
 	}
 }

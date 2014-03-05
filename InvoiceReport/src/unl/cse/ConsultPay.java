@@ -6,6 +6,7 @@ public class ConsultPay {
 	private double total;
 	private double taxed;
 	private double cost;
+	private String info;
 	
 	public ConsultPay() {}
 
@@ -29,6 +30,10 @@ public class ConsultPay {
 		this.taxed = taxed;
 	}
 	
+	public void setInfo(String info) {
+		this.info = info;
+	}
+	
 	public String getCode() {
 		return this.code;
 	}
@@ -47,5 +52,9 @@ public class ConsultPay {
 	
 	public double getTaxed() {
 		return this.taxed;
+	}
+	
+	public String getInfo() {
+		return this.info;
 	}
 }
