@@ -1,23 +1,19 @@
 package unl.cse;
 
-import java.util.ArrayList;
+import java.util.ArrayList; 
 import java.util.Collections;
 import java.util.List;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Main Persons class to interface with the Persons data
  * 
  * @author Jacob Charles
  * @author Alexis Kennedy
- * @version 0.1.0
+ * @version 0.5.0
  */
 
-@XmlRootElement(name = "persons", namespace = "unl.cse")
 public class PersonsHub {
 	
-	@XmlElement(name = "person")
 	private final List<Persons> personsList;
 	
 	/**
@@ -28,7 +24,6 @@ public class PersonsHub {
 	}
 	
 	/**
-	 * 
 	 * @param newPersons - Must be an instance of <b>Persons</b> Object, will be added to 
 	 * the hub.
 	 */
@@ -53,54 +48,19 @@ public class PersonsHub {
 	 * @param id - The id is used to find a specific Person
 	 * @return - Returns an ArrayList of an entire <b>Persons</b> Object
 	 */
-	public List<Persons> getPersonInfo(String id) {
-		boolean flag = false;
-		List<Persons> results = new ArrayList<Persons>();
+	public Persons getPersonInfo(String id) {
 		for(Persons p : this.personsList) {
 			if (p.getId().equals(id.trim())) {
-				results.add(p);
-				flag = true;
+				return p;
 			}
-		}
-		
-		if (flag == false) {
-			System.out.println("Error: Customer owner not found: "+id);
-		}
-		
-		return results;
+		} return null;
 	}
 	
-	public String getLastName(String id){
-		boolean flag = false;
-		String result = "N/A";
-		for(Persons p : this.personsList){
-			if(p.getId().equals(id.trim())) {
-				result = p.getLastName();
-				flag = true;
-			}			
-		}
-		
-		if(flag == false) {
-			System.out.println("Error: Salesman not found: " +id);
-		}
-		
-		return result;
-	}
-	
-	public String getFirstName(String id){
-		boolean flag = false;
-		String result = "N/A";
-		for(Persons p : this.personsList){
-			if(p.getId().equals(id.trim())) {
-				result = p.getFirstName();
-				flag = true;
-			}			
-		}
-		
-		if(flag == false) {
-			System.out.println("Error: Salesman not found: " +id);
-		}
-		
-		return result;
+	public boolean isThere (String id) {
+		for(Persons p : this.personsList) {
+			if (p.getId().equals(id.trim())) {
+				return true;
+			}
+		} return false;
 	}
 }

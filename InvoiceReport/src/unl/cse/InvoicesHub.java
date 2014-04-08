@@ -4,25 +4,20 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
 /**
- * Main Persons class to interface with the Persons data
+ * Interface for the Invoices
  * 
  * @author Jacob Charles
  * @author Alexis Kennedy
- * @version 0.1.0
+ * @version 0.2.0
  */
 
-@XmlRootElement(name = "invoices", namespace = "unl.cse")
 public class InvoicesHub {
 	
-	@XmlElement(name = "invoices")
 	private final List<Invoices> invoicesList;
 	
 	/**
-	 * Creates an ArrayList for <b>Persons</b> Object
+	 * Creates an ArrayList for <b>Invoice</b> Object
 	 */
 	public InvoicesHub() {
 		this.invoicesList = new ArrayList<Invoices>();
@@ -33,15 +28,13 @@ public class InvoicesHub {
 	 * @param newInvoices - Must be an instance of <b>Invoices</b> Object, will be added to
 	 * the hub.
 	 */
-	
 	public void addInvoices(Invoices newInvoices) {
 		this.invoicesList.add(newInvoices);
 	}
 	
 	/**
 	 * 
-	 * @return - Gives the entire <b>InvoicesHub</b> Object as an 
-	 * <i>unmodifiableList</i>
+	 * @return - Returns a List of Invoices
 	 */
 	public List<Invoices> getCollection() {
     	return Collections.unmodifiableList(this.invoicesList);

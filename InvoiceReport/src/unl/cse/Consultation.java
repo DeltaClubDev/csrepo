@@ -1,11 +1,8 @@
 package unl.cse;
 
-import java.util.List;
+import java.util.List; 
 import java.util.ArrayList;
 import java.util.Collections;
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
 
 /**
  * <b>Consultation</b> is a type of product where the instances live in
@@ -14,28 +11,26 @@ import javax.xml.bind.annotation.XmlType;
  * 
  * @author Jacob Charles
  * @author Alexis Kennedy
- * @version 0.1.0
+ * @version 0.5.0
  */
 
-@XmlType(propOrder={"code", "name", "hourPrice", "consultList"})
 public class Consultation {
-	
+	private int primaryKey;
+	private int personsID;
 	private String code;
 	private String name;
-	public double hourPrice;
-	
-	@XmlElement(name="consultant")
-	private final ArrayList<Persons> consultList;
-	
-	public Consultation() {
-		this.consultList = new ArrayList<Persons>();	
-	}
+	private double hourPrice;
+	private Persons humanRep;
+	private double hours;
+	private double total;
+	private double taxed;
+	private double cost;
+	private String info;
 	
 	/**
 	 * 
 	 * @param code - Primary indicator for a consultation, requires String
 	 */
-	@XmlElement(name="code")
 	public void setCode(String code) {
 		this.code = code.trim();
 	}
@@ -44,7 +39,6 @@ public class Consultation {
 	 * 
 	 * @param name - Accepts a String
 	 */
-	@XmlElement(name="name")
 	public void setName(String name) {
 		this.name = name.trim();
 	}
@@ -55,21 +49,17 @@ public class Consultation {
 	 * Note that if their is a failure in parsing, the default setting
 	 * is 0.0
 	 */
-	@XmlElement(name="hourPrice")
 	public void setHourPrice(String hourPrice) {
-		double temp;
-		
-		if (hourPrice == null) {
-			hourPrice = "0.0";
-		}
-		
 		try {
-			temp = Double.parseDouble(hourPrice.trim());
+			this.hourPrice = Double.parseDouble(hourPrice.trim());
 		} catch (Exception e) {
 			e.printStackTrace();
-			temp = 0.0;
+			this.hourPrice = 0.0;
 		}
-		this.hourPrice = temp;
+	}
+	
+	public void setHourPrice(double hourPrice) {
+		this.hourPrice = hourPrice;
 	}
 	
 	/**
@@ -78,8 +68,37 @@ public class Consultation {
 	 * corresponding id to indicate which person if any owns this
 	 * consultation
 	 */
-	public void addConsultList(List<Persons> consult) {
-		this.consultList.addAll(consult);
+	public void addHumanRep(Persons alien) {
+		this.humanRep = alien;
+	}
+	
+	public void setHours(String hours) {
+		try {
+			this.hours = Double.parseDouble(hours.trim());
+		} catch (Exception e) {
+			e.printStackTrace();
+			this.hours = 0.0;
+		}
+	}
+	
+	public void setTotal() {
+		this.total = this.getHours() * this.getHourPrice();
+	}
+	
+	public void setTaxed(boolean fee) {
+		if (fee == false) {
+			this.taxed = this.getTotal() * 0.0425;
+		} else {
+			this.taxed = 0.0;
+		}
+	}
+	
+	public void setCost() {
+		this.cost = this.getTotal() + this.getTaxed();
+	}
+	
+	public void setInfo() {
+		this.info = this.getHours()+" hrs at $"+this.getHourPrice()+"/hr";
 	}
 	
 	/**
@@ -110,7 +129,43 @@ public class Consultation {
 	 * 
 	 * @return - Returns the consultant which is a <b>Persons</b> object
 	 */
-	public List<Persons> getConsultList() {
-		return Collections.unmodifiableList(this.consultList);
+	public Persons getHumanRep() {
+		return this.humanRep;
+	}
+	
+	public double getHours() {
+		return this.hours;
+	}
+	
+	public double getTotal() {
+		return this.total;
+	}
+	
+	public double getTaxed() {
+		return this.taxed;
+	}
+	
+	public double getCost() {
+		return this.cost;
+	}
+	
+	public String getInfo() {
+		return this.info;
+	}
+
+	public int getPrimaryKey() {
+		return primaryKey;
+	}
+
+	public void setPrimaryKey(int primaryKey) {
+		this.primaryKey = primaryKey;
+	}
+
+	public int getPersonsID() {
+		return personsID;
+	}
+
+	public void setPersonsID(int personsID) {
+		this.personsID = personsID;
 	}
 }

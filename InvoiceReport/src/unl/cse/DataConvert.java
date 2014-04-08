@@ -19,11 +19,17 @@ import com.google.gson.GsonBuilder;
 /**
  * <b>DataConvert</b> is currently the main class.
  * The functions provided here will parse old data, and
- * convert them into either Json or XML.
+ * convert them into Json (XML was depreciated in 
+ * version 0.5.0. Also, Invoices are processed here as 
+ * the Invoices data is still considered data 
+ * converting.
+ * 
+ * As of version 0.5.0 this class now starts up a test 
+ * client for the database api.
  * 
  * @author Jacob Charles
  * @author Alexis Kennedy
- * @version 0.1.0
+ * @version 0.5.0
  */
 
 public class DataConvert {
@@ -32,16 +38,13 @@ public class DataConvert {
 	private final String CUSTOMERS_DATA_FILE = "data/Customers.dat";
 	private final String PRODUCTS_DATA_FILE = "data/Products.dat";
 	private final String INVOICES_DATA_FILE = "data/Invoices.dat";
-	private final String PERSONS_XML_FILE = "data/Persons.xml";
-	private final String CUSTOMERS_XML_FILE = "data/Customers.xml";
-	private final String PRODUCTS_XML_FILE = "data/Products.xml";
 	private final String PERSONS_JSON_FILE = "data/Persons.json";
 	private final String PRODUCTS_JSON_FILE = "data/Products.json";
 	private final String CUSTOMERS_JSON_FILE = "data/Customers.json";
-	private PersonsHub phub = new PersonsHub();
-	private ProductsHub prhub = new ProductsHub();
-	private CustomersHub chub = new CustomersHub();
-	private InvoicesHub ihub = new InvoicesHub();
+	private static PersonsHub phub = new PersonsHub();
+	private static ProductsHub prhub = new ProductsHub();
+	private static CustomersHub chub = new CustomersHub();
+	private static InvoicesHub ihub = new InvoicesHub();
 
 	/**
 	 * <b>DataConvert</b> constructor requires functionality parameters
@@ -52,29 +55,148 @@ public class DataConvert {
 	 * @param jsonOut - If true, will output JSON in the console
 	 * @param genJson - If true, will generate an JSON file
 	 */
-	public DataConvert(boolean xmlOut, boolean genXML, boolean jsonOut, boolean genJson, boolean genTxt) {
-
-		System.out.println("Parsing Persons data file...");
-		parsePersonsDat();
-		System.out.println("Parsing Customers data file...");
-		parseCustomersDat();
-		System.out.println("Parsing Product data file...");
-		parseProductsDat();
-		System.out.println("Parsing Invoice data file...");
-		parseInvoicesDat();
+	public DataConvert(boolean jsonOut, boolean genJson, boolean genTxt, boolean dbDownload, boolean verbose) {
 		
-
-		if (genXML == true) {
-
-			System.out.println("\n**** Converting data files into XML ****");
-			parsePersonsXml(xmlOut);
-			parseCustomersXml(xmlOut);
-			parseProductsXml(xmlOut);
-			System.out.println("Conversion complete");
-		}
-
-		if (genJson == true) {
+		if (dbDownload == false) {
+			System.out.println("Parsing Persons data file...");
+			parsePersonsDat();
+			System.out.println("Parsing Customers data file...");
+			parseCustomersDat();
+			System.out.println("Parsing Product data file...");
+			parseProductsDat();
+			System.out.println("Parsing Invoice data file...");
+			parseInvoicesDat();
+		} else {
+			// Persons Download
+			System.out.println("\n***** Adding Persons to main collection... *****");
+			PersonsData pd = new PersonsData();
+			pd.downloadPersons();
+			for (Persons p : pd.getPersons().getCollection()) {
+				phub.addPersons(p);
+				if (verbose == true) {
+					System.out.println("Primary Key: "+p.getPrimaryKey());
+					System.out.println("Code: "+p.getId());
+					System.out.println("Firstname: "+p.getFirstName());
+					System.out.println("Lastname: "+p.getLastName());
+					for (String e : p.getEmails()) {
+						System.out.println("Email: "+e);
+					}
+					System.out.println("AddressID: "+p.getAddressID());
+					System.out.println("Street ID: "+p.getAddress().getStreetID()+"\tStreet: "+p.getAddress().getStreet());
+					System.out.println("Zip ID: "+p.getAddress().getZipID()+"\tZip: "+p.getAddress().getZip());
+					System.out.println("City ID: "+p.getAddress().getCityID()+"\tCity: "+p.getAddress().getCity());
+					System.out.println("State ID: "+p.getAddress().getStateID()+"\tState: "+p.getAddress().getState());
+					System.out.println("Country ID: "+p.getAddress().getCountryID()+"\tCountry: "+p.getAddress().getCountry());
+					System.out.print("\n");
+				}
+			}
 			
+			// Customers Download
+			System.out.println("\n***** Adding Customers to main collection... *****");
+			CustomerData cd = new CustomerData();
+			cd.downloadCustomers(phub);
+			for (Customer c : cd.getCustomers().getCustomerList()) {
+				chub.addCustomer(c);
+				if (verbose == true) {
+					System.out.println("Primary Key: "+c.getPrimaryKey());
+					System.out.println("Persons ID: "+c.getHumanRep().getPrimaryKey());
+					System.out.println("Name: "+c.getName());
+					System.out.println("Type: "+c.getType());
+					System.out.println("Code: "+c.getCode());
+					System.out.println("AddressID: "+c.getAddressID());
+					System.out.println("Street ID: "+c.getAddress().getStreetID()+"\tStreet: "+c.getAddress().getStreet());
+					System.out.println("Zip ID: "+c.getAddress().getZipID()+"\tZip: "+c.getAddress().getZip());
+					System.out.println("City ID: "+c.getAddress().getCityID()+"\tCity: "+c.getAddress().getCity());
+					System.out.println("State ID: "+c.getAddress().getStateID()+"\tState: "+c.getAddress().getState());
+					System.out.println("Country ID: "+c.getAddress().getCountryID()+"\tCountry: "+c.getAddress().getCountry());
+					System.out.print("\n");
+				}
+			}
+			
+			// Products Download
+			System.out.println("\n***** Adding Products to main collection... *****");
+			ProductData prd = new ProductData();
+			prd.downloadProducts(phub);
+			for (Equipment e : prd.getProducts().getEquipList()) {
+				prhub.addEquipment(e);
+				if (verbose == true) {
+					System.out.println("Primary Key: "+e.getPrimaryKey());
+					System.out.println("Code: "+e.getCode());
+					System.out.println("Name: "+e.getName());
+					System.out.println("UnitMoneh: "+e.getUnitPrice());
+					System.out.print("\n");
+				}
+			}
+			for (License l : prd.getProducts().getLiceList()) {
+				prhub.addLicense(l);
+				if (verbose == true) {
+					System.out.println("Primary Key: "+l.getPrimaryKey());
+					System.out.println("Code: "+l.getCode());
+					System.out.println("Name: "+l.getName());
+					System.out.println("Price: "+l.getPrice());
+					System.out.println("Annual Price: "+l.getAnnualPrice());
+					System.out.print("\n");
+				}
+			}
+			for (Consultation c : prd.getProducts().getConsultList()) {
+				prhub.addConsutation(c);
+				if (verbose == true) {
+					System.out.println("Primary Key: "+c.getPrimaryKey());
+					System.out.println("Code: "+c.getCode());
+					System.out.println("Name: "+c.getName());
+					System.out.println("PersonID: "+c.getPersonsID()+"\t == PersonID: "+c.getHumanRep().getPrimaryKey());
+					System.out.println("Hour Fee: "+c.getHourPrice());
+					System.out.print("\n");
+				}
+			}
+			
+			// Invoice Download
+			System.out.println("\n***** Adding Invoices to main collection... *****");
+			MainInvoiceData mid = new MainInvoiceData();
+			mid.downloadInvoices(phub, prhub, chub);
+			for (Invoices i : mid.getInvoices().getCollection()) {
+				ihub.addInvoices(i);
+				if (verbose == true) {
+					System.out.println("Primary Key: "+i.getPrimaryKey());
+					System.out.println("Code :"+i.getCode());
+					System.out.println("Comply Fee: "+i.getHasComplyFee());
+					System.out.println("SalesMan ID: "+i.getPersonID());
+					System.out.println("Customer ID: "+i.getCustomerID());
+					for (Equipment e : i.getProducts().getEquipList()) {
+						System.out.println("Invoice for Equipment:");
+						System.out.println("Primary Key: "+e.getPrimaryKey());
+						System.out.println("Code: "+e.getCode());
+						System.out.println("Name: "+e.getName());
+						System.out.println("UnitMoneh: "+e.getUnitPrice());
+						System.out.println("Number of Units: "+e.getInvUnits());
+						System.out.print("\n");
+					}
+					for (License l : i.getProducts().getLiceList()) {
+						System.out.println("Invoice for License:");
+						System.out.println("Primary Key: "+l.getPrimaryKey());
+						System.out.println("Code: "+l.getCode());
+						System.out.println("Name: "+l.getName());
+						System.out.println("Price: "+l.getPrice());
+						System.out.println("Annual Price: "+l.getAnnualPrice());
+						System.out.println("Start Date: "+l.getStartDate());
+						System.out.println("End Date: "+l.getEndDate());
+						System.out.print("\n");
+					}
+					for (Consultation c : i.getProducts().getConsultList()) {
+						System.out.println("Invoice for Consultation:");
+						System.out.println("Primary Key: "+c.getPrimaryKey());
+						System.out.println("Code: "+c.getCode());
+						System.out.println("Name: "+c.getName());
+						System.out.println("PersonID: "+c.getPersonsID());
+						System.out.println("Hour Fee: "+c.getHourPrice());
+						System.out.println("Hours: "+c.getHours());
+						System.out.print("\n");
+					}
+				}
+			}
+		}
+			
+		if (genJson == true) {
 			System.out.println("\n**** Converting data files into JSON ****");
 			parsePersonsJson(jsonOut);
 			parseCustomersJson(jsonOut);
@@ -84,31 +206,8 @@ public class DataConvert {
 		
 		if (genTxt == true) {
 			System.out.println("\n**** Generating Invoices ****");
-			new InvoiceOutput(phub, prhub, chub, ihub);
+			new InvoiceOutput(ihub);
 			System.out.println("Conversion complete");
-		}
-	}
-
-	/**
-	 * <i>parsePersonsXml</i> will generate an XML file using the parsed
-	 * data from the old system.
-	 * 
-	 * @param xmlOut - If true, will output the XML in the console
-	 */
-	public void parsePersonsXml(boolean xmlOut) {
-		
-		System.out.println("Generating XML file: " + PERSONS_XML_FILE +"\n");
-		try {
-			JAXBContext cont = JAXBContext.newInstance(PersonsHub.class);
-			Marshaller marsh = cont.createMarshaller();
-			marsh.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-			File f = new File(PERSONS_XML_FILE);
-			marsh.marshal(phub, f);
-			if (xmlOut == true) {
-				marsh.marshal(phub, System.out);
-			}
-		} catch (JAXBException e) {
-			e.printStackTrace();
 		}
 	}
 
@@ -171,15 +270,12 @@ public class DataConvert {
 					dudes.setFirstName(names[0]);
 					dudes.setLastName(names[1]);
 					dudes.setEmails(emails);
-
-					ArrayList<Address> addressList = new ArrayList<Address>();
 					Address adr = new Address();
 					adr.setStreet(address[0]);
 					adr.setCity(address[1]);
 					adr.setState(address[2]);
 					adr.setZip(address[3]);
 					adr.setCountry(address[4]);
-					addressList.add(adr);
 					dudes.setAddress(adr);
 					phub.addPersons(dudes);
 				}
@@ -190,32 +286,8 @@ public class DataConvert {
 	}
 
 	/**
-	 * <i>parseCustomersXml</i> will generate an XML file using the parsed
-	 * data from the old system.
-	 * 
-	 * @param xmlOut - If true, will output the XML in the console
-	 */
-	public void parseCustomersXml(boolean xmlOut) {
-		
-		System.out.println("Generating XML file: " + CUSTOMERS_XML_FILE +"\n");
-		try {
-			JAXBContext cont = JAXBContext.newInstance(CustomersHub.class);
-			Marshaller marsh = cont.createMarshaller();
-			marsh.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-			File f = new File(CUSTOMERS_XML_FILE);
-			marsh.marshal(chub, f);
-			if (xmlOut == true) {
-				marsh.marshal(chub, System.out);
-			}
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
 	 * <i>parseCustomersJson</i> will generate an JSON file using the parsed
 	 * data from the old system.
-	 * 
 	 * @param jsonOut - If true, the JSON file will be displayed in the console
 	 */
 	public void parseCustomersJson(boolean jsonOut) {
@@ -265,63 +337,34 @@ public class DataConvert {
 					String id = tokens[2];
 					String name = tokens[3];
 					String[] address = tokens[4].split(",");
-
-					ArrayList<Address> adrList = new ArrayList<Address>();
+					
+					Customer c = new Customer();
+					if (type.equals("G") || type.equals("g")) {
+						c.setType('G');
+					} else if (type.equals("C") || type.equals("c")) {
+						c.setType('C');
+					} else {
+						System.out.println("Error: Invalid Company Type for: "+ name);
+						return;
+					}
+					
+					c.setCode(code);
+					c.setName(name);
 					Address adr = new Address();
 					adr.setStreet(address[0]);
 					adr.setCity(address[1]);
 					adr.setState(address[2]);
 					adr.setZip(address[3]);
 					adr.setCountry(address[4]);
-					adrList.add(adr);
-
-					if (type.equals("G") || type.equals("g")) {
-						GovComp gov = new GovComp();
-						gov.setCode(code);
-						gov.setName(name);
-						gov.addAddress(adr);
-						gov.addHumanRep(phub.getPersonInfo(id));
-						chub.addGovList(gov);
-
-					} else if (type.equals("C") || type.equals("c")) {
-						PubComp pub = new PubComp();
-						pub.setCode(code);
-						pub.setName(name);
-						pub.addAddress(adr);
-						pub.addHumanRep(phub.getPersonInfo(id));
-						chub.addPubList(pub);
-
-					} else {
-						System.out.println("Error: Invalid Company Type for: "
-								+ name);
+					c.addAddress(adr);
+					if (phub.isThere(id) == true) {
+						c.addHumanRep(phub.getPersonInfo(id));
 					}
-				}
+					chub.addCustomer(c);
+				}				
 			}
 		} catch (Exception e) {
 
-		}
-	}
-
-	/**
-	 * <i>parseProductsXml</i> will generate an XML file using the parsed
-	 * data from the old system.
-	 * 
-	 * @param xmlOut - If true, will output the XML in the console
-	 */
-	public void parseProductsXml(boolean xmlOut) {
-		
-		System.out.println("Generating XML file: " + PRODUCTS_XML_FILE +"\n");
-		try {
-			JAXBContext cont = JAXBContext.newInstance(ProductsHub.class);
-			Marshaller marsh = cont.createMarshaller();
-			marsh.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-			File f = new File(PRODUCTS_XML_FILE);
-			marsh.marshal(prhub, f);
-			if (xmlOut == true) {
-				marsh.marshal(prhub, System.out);
-			}
-		} catch (JAXBException e) {
-			e.printStackTrace();
 		}
 	}
 
@@ -400,9 +443,10 @@ public class DataConvert {
 						c.setCode(code);
 						c.setName(name);
 						c.setHourPrice(valueTwo);
-						c.addConsultList(phub.getPersonInfo(valueOne));
+						if (phub.isThere(valueOne) == true) {
+							c.addHumanRep(phub.getPersonInfo(valueOne));
+						}
 						prhub.addConsutation(c);
-
 					} else {
 						System.out.println("Error: Invalid Product Type for: "
 								+ name);
@@ -438,34 +482,33 @@ public class DataConvert {
 				List<String> prodList = Arrays.asList(prodString);
 				
 				Invoices i = new Invoices();
-				i.setInCode(inCode);
+				i.setCode(inCode);
 				i.setCustomCode(customCode);
-				char customType = chub.getCompType(customCode);
-				i.setCustomType(customType);
 				i.setSalesCode(salesCode);
-				
-				if (customType == 'G') {
+				if (chub.isThere(customCode) == true) {
+					i.setType(chub.getCustomerByCode(customCode).getType());
+					i.setCustomer(chub.getCustomerByCode(customCode));
+				}
+				if ((i.getType() == 'G') || (i.getType() == 'g')) {
 					i.setHasComplyFee(true);
 				} else {
 					i.setHasComplyFee(false);
 				}
 				
+				if (phub.isThere(salesCode) == true) {
+					i.setPerson(phub.getPersonInfo(salesCode));
+				}
+				
 				for (String prods : prodList) {
 					List<String> info = Arrays.asList(prods.split(":"));
-					
-					if(info.size() == 3) {
-						i.setProdLicense(prhub.getLiceYrPrice(info.get(0)),prhub.getLicePrice(info.get(0)), info, customType);
-					} else {
-						if (!(prhub.getConsultListById(info.get(0)).isEmpty())) {
-							i.setProdConsult(prhub.getConsultPrice(info.get(0)), info, customType);
-						} else if (!(prhub.getEquipListById(info.get(0)).isEmpty())){
-							i.setProdEquip(prhub.getEquipPrice(info.get(0)), info, customType);
-						} else {
-							System.out.println("Error: Product ID not found for: "+info.get(0));
-						}
+					if(prhub.equipIsThere(info.get(0))) { // Is a equipment
+						i.setEquipment(prhub.getEquipmentById(info.get(0)), info.get(1), -1);
+					} else if (prhub.liceIsThere(info.get(0))) { // is License
+						i.setLicense(prhub.getLicenseById(info.get(0)), info.get(1), info.get(2), -1);
+					} else if (prhub.consultIsThere(info.get(0))) { // is Consultant {
+						i.setConsultant(prhub.getConsultById(info.get(0)), info.get(1), -1);
 					}
-				}
-				ihub.addInvoices(i);
+				} ihub.addInvoices(i);
 			}
 		} catch (Exception e) {
 
@@ -473,19 +516,24 @@ public class DataConvert {
 	}
 
 	/**
-	 * Main method, will be moved in phase 3!
-	 * 
+	 * Main driver class
 	 * @param args - This parameter is not used
 	 */
 	public static void main(String[] args) {
-		
-		boolean XML_CONSOLE_OUTPUT = false;
-		boolean XML_GENERATE_DATA = false;
+
 		boolean JSON_CONSOLE_OUTPUT = false;
 		boolean JSON_GENERATE_DATA = false;
 		boolean TXT_GENERATE_DATA = true;
-
-		new DataConvert(XML_CONSOLE_OUTPUT, XML_GENERATE_DATA,
-				JSON_CONSOLE_OUTPUT, JSON_GENERATE_DATA, TXT_GENERATE_DATA);
+		boolean DB_DOWNLOAD_DATA = true;
+		boolean VERBOSE = false;
+		
+		new DataConvert(JSON_CONSOLE_OUTPUT, JSON_GENERATE_DATA, TXT_GENERATE_DATA, DB_DOWNLOAD_DATA, VERBOSE);
+		// Test Data
+//		ClientDerp derp = new ClientDerp(phub, prhub, chub, ihub);
+//		derp.uploadPeople();
+//		derp.uploadCustomers();
+//		derp.uploadProducts();
+//		derp.uploadInvoices();
+//		derp.stahp();
 	}
 }

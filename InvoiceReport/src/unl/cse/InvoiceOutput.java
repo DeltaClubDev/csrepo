@@ -3,20 +3,38 @@ package unl.cse;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <b>InvoiceOutput</b> was created in order to help keep the <b>DataConverter</b> easier
+ * to read. Here, a great deal of time was spent by a person with OCD to nicely format an
+ * output for all the invoice data.
+ * 
+ * @author Jacob Charles
+ * @author Alexis Kennedy
+ * @version 0.2.0
+ */
 public class InvoiceOutput {
-	private PersonsHub phub;
-	private ProductsHub prhub;
-	private CustomersHub chub;
 	private InvoicesHub ihub;
 	
-	public InvoiceOutput(PersonsHub phub, ProductsHub prhub, CustomersHub chub, InvoicesHub ihub) {
-		this.phub = phub;
-		this.prhub = prhub;
-		this.chub = chub;
+	/**
+	 * <i>InvoiceOutput</i> constructor
+	 * 
+	 * @param phub - <b>PersonsHub</b> object containing all the Persons instances
+	 * @param prhub - <b>ProductsHub</b> object containing all the Products instances
+	 * @param chub - <b>CustomersHub</b> object containing all the Customers instances
+	 * @param ihub - <b>InvoicesHub</b> object containing all the Invoice instances
+	 */
+	public InvoiceOutput(InvoicesHub ihub) {
 		this.ihub = ihub;
 		parseInvoicesTxt();
 	}
 	
+	/**
+	 * <i>getAlign</i> is a function that was commonly used, so we made this reusable
+	 * 
+	 * @param size - size of the box to center the text in (double)
+	 * @param str - text to fill the box (String)
+	 * @return - Returns an integer
+	 */
 	public int getAlign(double size, String str) {
 		int result = 0;
 		if (((size - str.length()) / 2.0) != (Math.floor((size - str.length()) / 2.0))) {
@@ -25,12 +43,26 @@ public class InvoiceOutput {
 		return result;
 	}
 	
+	/**
+	 * <i>getFormat</i> is the main juice to get centered text boxes. This fuction is used often
+	 * so it became necessary to make a method out of it.
+	 * 
+	 * @param size - size of the box to center the text in (double)
+	 * @param str - text to fill the box (String)
+	 * @return - Returns a String
+	 */
 	public String getFormat(double size, String str) {
 		String result = "%"+(Math.floor((((size - str.length()) / 2)+getAlign(size, str))))+"s%"+str.length()+"s%"+
 		(Math.floor(((size - str.length()) / 2)))+"s";
 		return result;
 	}
 	
+	/**
+	 * <i>cashToString</i> is commonly used to convert from doubles to String
+	 * 
+	 * @param cash - value to convert into a String (double)
+	 * @return - Returns a String
+	 */
 	public String cashToString(double cash) {
 		String result = "N/A";
 		try {
@@ -47,25 +79,25 @@ public class InvoiceOutput {
 		System.out.println("~=====================~");
 		
 		//Printing Table Header for Invoice Summary
-		System.out.print("\n+------+"); //ID
-		System.out.print("----------------------------------------------+"); //Customer
+		System.out.print("\n+---------+"); //ID
+		System.out.print("-------------------------------------------+"); //Customer
 		System.out.print("------------------------------+"); // Sales person
-		System.out.print("-------------+"); // Subtotal
+		System.out.print("---------------+"); // Subtotal
 		System.out.print("-------------+"); // Fees
 		System.out.print("-------------+"); // Taxes
-		System.out.print("-------------+\n"); // Total
+		System.out.print("---------------+\n"); // Total
 		
 		System.out.print("|");
-		System.out.printf("%2s%2s%2s","","ID","");
+		System.out.printf("%3s%2s%4s","","ID","");
 		System.out.print("|");
 		
-		System.out.printf("%19s%8s%19s","", "Customer", "");
+		System.out.printf("%17s%8s%18s","", "Customer", "");
 		System.out.print("|");
 		
 		System.out.printf("%9s%12s%9s", "", "Sales person", "");
 		System.out.printf("|");
 		
-		System.out.printf("%2s%8s%3s", "", "Subtotal", "");
+		System.out.printf("%3s%8s%4s", "", "Subtotal", "");
 		System.out.print("|");
 		
 		System.out.printf("%4s%4s%5s", "", "Fees", "");
@@ -74,45 +106,43 @@ public class InvoiceOutput {
 		System.out.printf("%4s%5s%4s", "", "Taxes", "");
 		System.out.print("|");
 		
-		System.out.printf("%4s%5s%4s", "", "Total", "");
+		System.out.printf("%5s%5s%5s", "", "Total", "");
 		System.out.print("|\n");
 		
-		System.out.print("+------+"); //ID
-		System.out.print("----------------------------------------------+"); //Customer
+		System.out.print("+---------+"); //ID
+		System.out.print("-------------------------------------------+"); //Customer
 		System.out.print("------------------------------+"); // Sales person
-		System.out.print("-------------+"); // Subtotal
+		System.out.print("---------------+"); // Subtotal
 		System.out.print("-------------+"); // Fees
 		System.out.print("-------------+"); // Taxes
-		System.out.print("-------------+\n"); // Total
+		System.out.print("---------------+\n"); // Total
 		
 		// Iterate through Invoice list and print summary details
 		for (Invoices i : ihub.getCollection()) {
+			String id = i.getCode();
 			System.out.print("|");
-			System.out.print(i.getInCode());
+			System.out.printf(getFormat(9.0, id), "", id, "");
 			//Company name
-			String company = chub.getCompName(i.getCustomCode());
+			String company = i.getCustomer().getName();
 			System.out.print("|");
-			System.out.printf(getFormat(46.0, company), "", company, "");
+			System.out.printf(getFormat(43.0, company), "", company, "");
 			
 			//Sales person name
-			String name = phub.getLastName(i.getSalesCode())+" "+phub.getFirstName(i.getSalesCode());
+			String name = i.getPerson().getFirstName()+", "+i.getPerson().getLastName();
 			System.out.print("|");
 			System.out.printf(getFormat(30.0, name), "", name, "");
 			
 			//Subtotal
-			String subtotalF = cashToString(i.getSubTotal());
+			String subtotalF = cashToString(i.getProducts().getSubTotal());
 			System.out.print("|");
 			try {
-				System.out.printf(getFormat(12.0, subtotalF), "", "$"+subtotalF, "");
+				System.out.printf(getFormat(14.0, subtotalF), "", "$"+subtotalF, "");
 			} catch (Exception e) {
-				System.out.printf("%3s %3s %3s", "", "N/A", "");
+				System.out.printf("%4s %3s %4s", "", "N/A", "");
 			}
 			
 			//Fees
-			double fee = i.getFee();
-			if (i.getHasComplyFee() == true) {
-				fee += 125.00;
-			}
+			double fee = i.getProducts().getFee(i.getHasComplyFee());
 			String feeF = cashToString(fee);
 			System.out.print("|");
 			try {
@@ -122,10 +152,7 @@ public class InvoiceOutput {
 			}
 			
 			//Taxes
-			double taxes = 0.00;
-			if (i.getHasComplyFee() == false) {
-				taxes = i.getTaxes();
-			}
+			double taxes = i.getProducts().getTaxed(i.getHasComplyFee());
 			String taxF = cashToString(taxes);
 			System.out.print("|");
 			try {
@@ -135,24 +162,24 @@ public class InvoiceOutput {
 			}
 			
 			//Total
-			String totalF = cashToString(i.getSubTotal() + fee + taxes);
+			String totalF = cashToString(i.getProducts().getCost(i.getHasComplyFee()));
 			System.out.print("|");
 			try {
-				System.out.printf(getFormat(12.0, totalF), "", "$"+totalF, "");
+				System.out.printf(getFormat(14.0, totalF), "", "$"+totalF, "");
 			} catch (Exception e) {
-				System.out.printf("%3s %3s %3s", "", "N/A", "");
+				System.out.printf("%4s %3s %4s", "", "N/A", "");
 			}
 			System.out.print("|");
 			
 			
 			System.out.print("\n");
-			System.out.print("+------+"); //ID
-			System.out.print("----------------------------------------------+"); //Customer
+			System.out.print("+---------+"); //ID
+			System.out.print("-------------------------------------------+"); //Customer
 			System.out.print("------------------------------+"); // Sales person
-			System.out.print("-------------+"); // Subtotal
+			System.out.print("---------------+"); // Subtotal
 			System.out.print("-------------+"); // Fees
 			System.out.print("-------------+"); // Taxes
-			System.out.print("-------------+\n"); // Total
+			System.out.print("---------------+\n"); // Total
 		}
 				
 		System.out.print("\n");
@@ -163,45 +190,30 @@ public class InvoiceOutput {
 
 		// Iterate through Invoice list and print details
 		for (Invoices i : ihub.getCollection()) {
-			System.out.println("++--------++");
-			System.out.printf("%3s%6s%3s", "|| ", i.getInCode()," ||\n");
-			System.out.println("++--------++");
+			System.out.println("++-----------++");
+			System.out.printf("%3s%-9s%3s", "|| ", i.getCode()," ||\n");
+			System.out.println("++-----------++");
 			
-			String name = phub.getLastName(i.getSalesCode())+" "+phub.getFirstName(i.getSalesCode());
+			String name = i.getPerson().getFirstName()+", "+i.getPerson().getLastName();
 			System.out.printf("\n\t%14s%-30s", "Sales person: ", name);
 			System.out.print("\n");
 			
-			String company = chub.getCompName(i.getCustomCode());
+			String company = i.getCustomer().getName();
 			System.out.println("\t[]---------------[]");
 			System.out.printf("\t%3s%13s%3s", "|| ", "Customer Data"," ||\n");
 			System.out.println("\t[]---------------[]\n\t:");
-			System.out.printf("\t%1s==> %-10s%-46s\n", ":", "Name: ", company+" ("+i.getCustomCode()+")");
+			System.out.printf("\t%1s==> %-10s%-46s\n", ":", "Name: ", company+" ("+i.getCustomer().getCode()+")");
 	
 			//customer data
-			List<Address> tempAddr = new ArrayList<Address>();
-			List<Persons> tempDude = new ArrayList<Persons>();
-			tempAddr = chub.getCompAddr(i.getCustomCode());
-			tempDude = chub.getHumanRep(i.getCustomCode());
-			String street = "N/A";
-			String city = "N/A";
-			String country = "N/A";
-			String state = "N/A";
-			String zip = "N/A";
-			String firstName = "N/A";
-			String lastName = "N/A";
-			String dudeId = "N/A";
-			for (Address s : tempAddr) {
-				street = s.getStreet();
-				city = s.getCity();
-				country = s.getCountry();
-				state = s.getState();
-				zip = s.getZip();
-			}
-			for (Persons p : tempDude) {
-				firstName = p.getFirstName();
-				lastName = p.getLastName();
-				dudeId = p.getId();
-			}
+			String street = i.getCustomer().getAddress().getStreet();
+			String city = i.getCustomer().getAddress().getCity();
+			String country = i.getCustomer().getAddress().getCountry();
+			String state = i.getCustomer().getAddress().getState();
+			String zip = i.getCustomer().getAddress().getZip();
+			String firstName = i.getCustomer().getHumanRep().getFirstName();
+			String lastName = i.getCustomer().getHumanRep().getLastName();
+			String dudeId = i.getCustomer().getPersonsCode();
+
 			System.out.printf("\t%1s==> %-10s%-46s\n", ":", "Country: ", country);
 			System.out.printf("\t%1s==> %-10s%-46s\n", ":", "State: ", state);
 			System.out.printf("\t%1s==> %-10s%-46s\n", ":", "City: ", city);
@@ -218,7 +230,7 @@ public class InvoiceOutput {
 			System.out.print("-----------------------------------------------------------------+"); // Product
 			System.out.print("-------------+"); // Fees
 			System.out.print("-------------+"); // Taxed
-			System.out.print("-------------+\n\t:"); // Total
+			System.out.print("---------------+\n\t:"); // Total
 			System.out.print("|");
 			System.out.printf("%1s%4s%1s","","Code","");
 			System.out.print("|");
@@ -228,28 +240,27 @@ public class InvoiceOutput {
 			System.out.print("|");
 			System.out.printf("%4s%5s%4s", "", "Taxed", "");
 			System.out.print("|");
-			System.out.printf("%4s%5s%4s", "", "Total", "");
+			System.out.printf("%5s%5s%5s", "", "Total", "");
 			System.out.print("|\n\t:");
 			System.out.print("+------+"); // Code
 			System.out.print("-----------------------------------------------------------------+"); // Product
 			System.out.print("-------------+"); // Fees
 			System.out.print("-------------+"); // Taxed
-			System.out.print("-------------+"); // Total
+			System.out.print("---------------+"); // Total
 			
-			List<String> codes = i.getCodes(i.getCustomCode());
+			List<String> codes = i.getProducts().getCodes();
 			for (String c : codes) {
-				char type = prhub.getType(c);
 				System.out.print("\n\t:|");
 				// Code
 				System.out.printf(getFormat(6.0, c), "", c, "");
 				
 				// Product
 				System.out.print("|");
-				String prodInfo = prhub.getNameById(c, type)+" ("+i.getPayInfo(c, type)+")";					
+				String prodInfo = i.getProducts().getNameByCode(c)+" ("+i.getProducts().getInfoByCode(c)+")";					
 				System.out.printf(getFormat(65.0, prodInfo), "", prodInfo, "");
 				
 				// Fees
-				String feeF = cashToString(i.getProductFee(c, type));
+				String feeF = cashToString(i.getProducts().getFeeByCode(c, i.getHasComplyFee()));
 				System.out.print("|");
 				try {
 					System.out.printf(getFormat(12.0, feeF), "", "$"+feeF, "");
@@ -258,7 +269,7 @@ public class InvoiceOutput {
 				}
 				
 				// Taxes
-				String taxedF = cashToString(i.getProductTax(c, type));
+				String taxedF = cashToString(i.getProducts().getTaxedByCode(c, i.getHasComplyFee()));
 				System.out.print("|");
 				try {
 					System.out.printf(getFormat(12.0, taxedF), "", "$"+taxedF, "");
@@ -267,12 +278,12 @@ public class InvoiceOutput {
 				}
 
 				// Total
-				String totF = cashToString(i.getProductTot(c, type));
+				String totF = cashToString(i.getProducts().getSubTotalByCode(c));
 				System.out.print("|");
 				try {
-					System.out.printf(getFormat(12.0, totF), "", "$"+totF, "");
+					System.out.printf(getFormat(14.0, totF), "", "$"+totF, "");
 				} catch (Exception e) {
-					System.out.printf("%3s %3s %3s", "", "N/A", "");
+					System.out.printf("%4s %3s %4s", "", "N/A", "");
 				}
 				
 				System.out.print("|");
@@ -280,7 +291,7 @@ public class InvoiceOutput {
 				System.out.print("-----------------------------------------------------------------+"); // Product
 				System.out.print("-------------+"); // Fees
 				System.out.print("-------------+"); // Taxed
-				System.out.print("-------------+"); // Total
+				System.out.print("---------------+"); // Total
 			}
 			
 			// Print out Totals
@@ -289,10 +300,7 @@ public class InvoiceOutput {
 			System.out.printf("%-5s", "");
 			
 			// Total Fee
-			double fee = i.getFee();
-			if (i.getHasComplyFee() == true) {
-				fee += 125.00;
-			}
+			double fee = i.getProducts().getFee(i.getHasComplyFee());
 			String feeF = cashToString(fee);
 			try {
 				System.out.printf(getFormat(12.0, feeF), "", "$"+feeF, "");
@@ -301,14 +309,7 @@ public class InvoiceOutput {
 			}
 
 			// Total Taxes
-			double taxes = 0.00;
-			String complyFee = "0.00";
-			if (i.getHasComplyFee() == false) {
-				taxes = i.getTaxes();
-			} else if (i.getHasComplyFee() == true) {
-				complyFee = "125.00";
-			}
-			String taxF = cashToString(taxes);
+			String taxF = cashToString(i.getProducts().getTaxed(i.getHasComplyFee()));
 			System.out.print("|");
 			try {
 				System.out.printf(getFormat(12.0, taxF), "", "$"+taxF, "");
@@ -317,15 +318,19 @@ public class InvoiceOutput {
 			}
 			
 			// Sub Total
-			String subtotalF = cashToString(i.getSubTotal());
+			String subtotalF = cashToString(i.getProducts().getSubTotal());
 			System.out.print("|");
 			try {
-				System.out.printf(getFormat(12.0, subtotalF), "", "$"+subtotalF, "");
+				System.out.printf(getFormat(14.0, subtotalF), "", "$"+subtotalF, "");
 			} catch (Exception e) {
-				System.out.printf("%3s %3s %3s", "", "N/A", "");
+				System.out.printf("%4s %3s %4s", "", "N/A", "");
 			}
 			
 			// Comply Fee
+			String complyFee = "0.00";
+			if (i.getHasComplyFee() == true) {
+				complyFee = "125.00";
+			}
 			System.out.print("\n\t:=======================================================> Compliance Fee:");
 			System.out.printf("%30s", "");
 			try {
@@ -335,16 +340,16 @@ public class InvoiceOutput {
 			}
 			
 			// Total!
-			System.out.printf("\n\t:%56s%60s", "", "___________________________________________________________");
+			System.out.printf("\n\t:%56s%60s", "", "_____________________________________________________________");
 			System.out.print("\n\t:=======================================================> Total: ");
 			System.out.printf("%38s", "");
-			String totalF = cashToString(i.getSubTotal() + fee + taxes);
+			String totalF = cashToString(i.getProducts().getCost(i.getHasComplyFee()));
 			try {
-				System.out.printf(getFormat(12.0, totalF), "", "$"+totalF, "");
+				System.out.printf(getFormat(14.0, totalF), "", "$"+totalF, "");
 			} catch (Exception e) {
-				System.out.printf("%3s %3s %3s", "", "N/A", "");
+				System.out.printf("%4s %3s %4s", "", "N/A", "");
 			}
-			System.out.printf("\n\t%57s%60s", "", "###########################################################");
+			System.out.printf("\n\t%57s%62s", "", "#############################################################");
 			
 			System.out.print("\n\n");
 		}

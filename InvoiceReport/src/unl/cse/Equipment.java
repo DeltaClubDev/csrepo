@@ -1,9 +1,5 @@
 package unl.cse;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
-
 /**
  * <b>Equipment</b> is a very simple product that requires no objects
  * 
@@ -12,30 +8,34 @@ import javax.xml.bind.annotation.XmlType;
  * @version 0.1.0
  */
 
-@XmlRootElement(name="unl.cse")
-@XmlType(propOrder={"code", "name", "unitPrice"})
 public class Equipment {
 	
+	private int primaryKey;
 	private String code;
 	private String name;
-	public Double unitPrice;
+	private double unitPrice;
+	private int invUnits;
+	private double total;
+	private double taxed;
+	private double cost;
+	private String info;
 	
 	public Equipment() { }
+
+	public void setPrimaryKey(int key) {
+		this.primaryKey = key;
+	}
 	
 	/**
-	 * 
 	 * @param code - Primary indicator for an equipment, requires String
 	 */
-	@XmlElement(name="code")
 	public void setCode(String code) {
 		this.code = code.trim();
 	}
 	
 	/**
-	 * 
 	 * @param name - Accepts a String
 	 */
-	@XmlElement(name="name")
 	public void setName(String name) {
 		this.name = name.trim();
 	}
@@ -46,21 +46,50 @@ public class Equipment {
 	 * Note that if their is a failure in parsing, the default setting
 	 * is 0.0
 	 */
-	@XmlElement(name="unitPrice")
 	public void setUnitPrice(String unitPrice) {
-		Double temp;
-		
-		if (unitPrice == null) {
-			unitPrice = "0.0";
-		}
-		
 		try {
-			temp = Double.parseDouble(unitPrice.trim());
+			this.unitPrice = Double.parseDouble(unitPrice.trim());
 		} catch (Exception e) {
 			e.printStackTrace();
-			temp = 0.0;
+			this.unitPrice = 0.0;
 		}
-		this.unitPrice = temp;
+	}
+	
+	public void setUnitPrice(double unitPrice) {
+		this.unitPrice = unitPrice;
+	}
+
+	public void setInvUnits(String invUnits) {
+		try {
+			this.invUnits = Integer.parseInt(invUnits);
+		} catch (Exception e) {
+			e.printStackTrace();
+			this.invUnits = 0;
+		}
+	}
+	
+	public void setTotal() {
+		this.total = this.getUnitPrice() * this.getInvUnits();
+	}
+	
+	public void setTaxed(boolean fee) {
+		if (fee == false) {
+			this.taxed = this.getTotal() * 0.07;
+		} else {
+			this.taxed = 0.0;
+		}
+	}
+	
+	public void setCost() {
+		this.cost = this.getTotal() + this.getTaxed();
+	}
+	
+	public void setInfo() {
+		this.info = this.getInvUnits()+" units at $"+this.getUnitPrice()+"/unit";
+	}
+	
+	public int getPrimaryKey() {
+		return this.primaryKey;
 	}
 	
 	/**
@@ -68,7 +97,7 @@ public class Equipment {
 	 * @return - Returns a String
 	 */
 	public String getCode() {
-		return code;
+		return this.code;
 	}
 	
 	/**
@@ -76,14 +105,30 @@ public class Equipment {
 	 * @return - Returns a String
 	 */
 	public String getName() {
-		return name;
+		return this.name;
 	}
 	
 	/**
 	 * 
 	 * @return - Returns a Double
 	 */
-	public Double getUnitPrice() {
-		return unitPrice;
+	public double getUnitPrice() {
+		return this.unitPrice;
+	}
+	
+	public int getInvUnits() {
+		return this.invUnits;
+	}
+	
+	public double getTotal() {
+		return this.total;
+	}
+	
+	public double getTaxed() {
+		return this.taxed;
+	}
+	
+	public String getInfo() {
+		return this.info;
 	}
 }
