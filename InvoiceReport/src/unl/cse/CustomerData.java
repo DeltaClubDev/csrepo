@@ -6,6 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Downloads the Customer data and creates the <b>Customer</b> objects
+ * @author Jacob Charles
+ * @author Alexis Kennedy
+ * @version 0.5.0
+ */
 public class CustomerData {
 	private Connection conn;
 	private CustomersHub chub = new CustomersHub();
@@ -33,6 +39,7 @@ public class CustomerData {
 		try {
 			conn = DriverManager.getConnection(DBConnection.DB_URL, DBConnection.DB_USERNAME, DBConnection.DB_PASSWORD);
 			PreparedStatement ps = conn.prepareStatement(query);
+			PreparedStatement psAddr = conn.prepareStatement(queryAddr);
 			ps.setInt(1, 0);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
@@ -51,7 +58,6 @@ public class CustomerData {
 				String code = rs.getString("CompCode");
 				Customer c = createCustomer(companyID, personsID, addressID, name, type, code, persCode);
 				// Address Data
-				PreparedStatement psAddr = conn.prepareStatement(queryAddr);
 				psAddr.setInt(1, addressID);
 				ResultSet rsAddr = psAddr.executeQuery();
 				AddressData ad = new AddressData();
@@ -72,6 +78,14 @@ public class CustomerData {
 					}
 				}
 				chub.addCustomer(c);
+			}
+
+			if ((ps != null) || (!ps.isClosed())) {
+				ps.close();
+			} if (psAddr != null) {
+				psAddr.close();
+			} if ((this.conn != null) || (!this.conn.isClosed())) {
+				this.conn.close();
 			}
 		} catch (SQLException e) {
 			System.out.println("SQLException: ");

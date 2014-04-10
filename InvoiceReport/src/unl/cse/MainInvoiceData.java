@@ -6,6 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Downloads the invoice data from the database and loads the objects
+ * @author Jacob Charles
+ * @author Alexis Kennedy
+ * @version 0.5.0
+ */
 public class MainInvoiceData {
 	private Connection conn;
 	private InvoicesHub ihub = new InvoicesHub();

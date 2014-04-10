@@ -8,6 +8,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Downloads the Persons data from the database and Loads the objects
+ * @author Jacob Charles
+ * @author Alexis Kennedy
+ * @version 0.5.0
+ */
 public class PersonsData {
 	private Connection conn;
 	private PersonsHub phub = new PersonsHub();
@@ -36,6 +42,8 @@ public class PersonsData {
 		try {
 			conn = DriverManager.getConnection(DBConnection.DB_URL, DBConnection.DB_USERNAME, DBConnection.DB_PASSWORD);
 			PreparedStatement ps = conn.prepareStatement(query);
+			PreparedStatement psEmails = conn.prepareStatement(queryEmails);
+			PreparedStatement psAddr = conn.prepareStatement(queryAddr);
 			ps.setInt(1, 0);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
@@ -47,7 +55,6 @@ public class PersonsData {
 				int addressID = rs.getInt("AddressID");
 				Persons p = createPersons(personID, persCode, firstName, lastName, addressID);
 				// Email data
-				PreparedStatement psEmails = conn.prepareStatement(queryEmails);
 				psEmails.setInt(1, personID);
 				ResultSet rsEmails = psEmails.executeQuery();
 				List<String> emails = new ArrayList<String>();
@@ -57,7 +64,6 @@ public class PersonsData {
 				}
 				setEmails(p, emails);
 				// Address data
-				PreparedStatement psAddr = conn.prepareStatement(queryAddr);
 				psAddr.setInt(1, addressID);
 				ResultSet rsAddr = psAddr.executeQuery();
 				AddressData ad = new AddressData();
@@ -72,6 +78,15 @@ public class PersonsData {
 				}
 				p.setAddress(a);
 				phub.addPersons(p);
+			}
+			if ((ps != null) || (!ps.isClosed())) {
+				ps.close();
+			} if (psAddr != null) {
+				psAddr.close();
+			} if (psEmails != null) {
+				psEmails.close();
+			} if ((this.conn != null) || (!this.conn.isClosed())) {
+				this.conn.close();
 			}
 		} catch (SQLException e) {
 			System.out.println("SQLException: ");

@@ -40,23 +40,16 @@ public class Persons {
 		this.addressID = id;
 	}
 
-	/**
-	 * @param name - Must be a String
-	 */
 	public void setFirstName(String name) {
 		this.firstName = name.trim();
 	}
-	
-	/**
-	 * @param name - Must be a String
-	 */
+
 	public void setLastName(String name) {
 		this.lastName = name.trim();
 	}
 
 	/**
 	 * <i>setAddress</i> will reference an instance of an <b>Address</b> class
-	 * by putting the object into the addressList
 	 * @param address - Accepts the <b>Address</b> object
 	 */
 	public void setAddress(Address address) {
@@ -77,24 +70,15 @@ public class Persons {
 			}
 		}
 	}
-	
-	/**
-	 * @return - Returns a String
-	 */
+
 	public String getId() {
 		return this.id;
 	}
 
-	/**
-	 * @return - Returns a String
-	 */
 	public String getFirstName() {
 		return this.firstName;
 	}
-	
-	/**
-	 * @return - Returns a String
-	 */
+
 	public String getLastName() {
 		return this.lastName;
 	}

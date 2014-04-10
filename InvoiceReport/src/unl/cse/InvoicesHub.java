@@ -9,7 +9,7 @@ import java.util.List;
  * 
  * @author Jacob Charles
  * @author Alexis Kennedy
- * @version 0.2.0
+ * @version 0.5.0
  */
 
 public class InvoicesHub {
@@ -24,7 +24,6 @@ public class InvoicesHub {
 	}
 	
 	/**
-	 * 
 	 * @param newInvoices - Must be an instance of <b>Invoices</b> Object, will be added to
 	 * the hub.
 	 */
@@ -33,7 +32,6 @@ public class InvoicesHub {
 	}
 	
 	/**
-	 * 
 	 * @return - Returns a List of Invoices
 	 */
 	public List<Invoices> getCollection() {

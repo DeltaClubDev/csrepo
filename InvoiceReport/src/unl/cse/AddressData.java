@@ -1,7 +1,24 @@
 package unl.cse;
 
+/**
+ * Creates an Address object by downloading from datarbase
+ * @author Linus
+ * @author ___________________________________________________________________________________________________
+ * @author Alexis Kennedy
+ * @author Jacob Charles
+ * @version 0.5.0
+ */
 public class AddressData {
 	public DBFactory dbConn = new DBFactory();
+	/**
+	 * @param addrID
+	 * @param countryID
+	 * @param stateID
+	 * @param cityID
+	 * @param zipID
+	 * @param streetID
+	 * @return
+	 */
 	public Address createAddress(int addrID, int countryID, int stateID, int cityID, int zipID, int streetID) {
 		String queryC = "SELECT Name FROM Country WHERE CountryID = ?";
 		String queryS = "SELECT Name FROM State WHERE StateID = ?";

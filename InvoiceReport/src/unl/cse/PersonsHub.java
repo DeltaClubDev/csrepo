@@ -32,7 +32,6 @@ public class PersonsHub {
 	}
 	
 	/**
-	 * 
 	 * @return - Gives the entire <b>PersonsHub</b> Object as an 
 	 * <i>unmodifiableList</i>
 	 */

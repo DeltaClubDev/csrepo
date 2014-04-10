@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `Zip` (
 
 CREATE TABLE IF NOT EXISTS `Street` (
     `StreetID` INT(6) NOT NULL AUTO_INCREMENT,
-    `Name` VARCHAR(30) NOT NULL,
+    `Name` VARCHAR(50) NOT NULL,
     `CountryID` INT(6) NOT NULL,
     PRIMARY KEY (StreetID),
     FOREIGN KEY (CountryID) REFERENCES Country (CountryID)
@@ -118,7 +118,7 @@ CREATE TABLE IF NOT EXISTS `Products` (
 
 CREATE TABLE IF NOT EXISTS `MainInvoice` (
     `MainInvoiceID` INT(6) NOT NULL AUTO_INCREMENT,
-    `InvoiceCode` VARCHAR(10),
+    `InvoiceCode` VARCHAR(20),
     `CompanyID` INT(6),
     `Subtotal` DECIMAL(12,2) DEFAULT 0.00,
     `SalesDudeID` INT(6),

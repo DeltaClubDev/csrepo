@@ -6,6 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Downloads the product information and sets the objects
+ * @author Jacob Charles
+ * @author Alexis Kennedy
+ * @version 0.5.0
+ */
 public class ProductData {
 	private Connection conn;
 	private ProductsHub prhub = new ProductsHub();
@@ -58,7 +64,12 @@ public class ProductData {
 					License l = createLicense(id, code, name, fee, annualFee);
 					prhub.addLicense(l);
 				}
-			} 
+			}
+			if ((ps != null) || (!ps.isClosed())) {
+				ps.close();
+			} if ((this.conn != null) || (!this.conn.isClosed())) {
+				this.conn.close();
+			}
 		} catch (SQLException e) {
 			System.out.println("SQLException: ");
 			e.printStackTrace();

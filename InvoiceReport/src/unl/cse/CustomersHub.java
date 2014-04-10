@@ -1,16 +1,11 @@
 package unl.cse;
 
-import java.util.ArrayList; 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 /**
- * <b>CustomersHub</b> Is the main Handler for interfacing with the
- * <b>GovComp</b> and <b>PubComp</b> objects. Currently, their is no
- * difference between the two, and perhaps might be merged into one
- * company class. For now, it is easier to have the separate classes
- * to parse XML data.
- * 
+ * Container for Customer object
  * @author Jacob Charles
  * @author Alexis Kennedy
  * @version 0.5.0
@@ -29,15 +24,13 @@ public class CustomersHub {
 	}
 	
 	/**
-	 * 
-	 * @param newGovList - Adds an instance of <b>GovComp</b> to the hub.
+	 * @param newCustomer - Adds an instance of <b>Customer</b> to the hub.
 	 */
 	public void addCustomer(Customer newCustomer) {
 		this.customerList.add(newCustomer);
 	}
 
 	/**
-	 * 
 	 * @return - Returns an <i>unmodifiableList</i> of all the <b>GovComp</b> instances
 	 */
 	public List<Customer> getCustomerList() {
@@ -61,9 +54,7 @@ public class CustomersHub {
 	}
 	
 	public String getNameByCode(String code) {
-		boolean entered = false;
 		for(Customer c : this.customerList) {
-			entered = true;
 			if (c.getCode().equals(code.trim())) {
 				return c.getName();
 			}

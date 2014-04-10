@@ -1,5 +1,11 @@
 package unl.cse;
 
+/**
+ * Main Invoice that contains a Product hub for the invoiced products
+ * @author Jacob Charles
+ * @author Alexis Kennedy
+ * @version 0.5.0
+ */
 public class Invoices{
 	private int primaryKey;
 	private int customerID;
@@ -23,6 +29,9 @@ public class Invoices{
 		this.customer = c;
 	}
 	
+	/**
+	 * @param code - Old system key reference
+	 */
 	public void setCode(String code) {
 		if ((code != null) && (!code.trim().isEmpty())) {
 			this.code = code.trim();
@@ -138,6 +147,9 @@ public class Invoices{
 		return primaryKey;
 	}
 
+	/**
+	 * @param primaryKey - Primary key to database (MainInvoice) table
+	 */
 	public void setPrimaryKey(int primaryKey) {
 		this.primaryKey = primaryKey;
 	}

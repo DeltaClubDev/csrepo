@@ -5,7 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * <b>License</b> is a very simple product that requires no objects
+ * <b>License</b> Models the License product in the business model
  * 
  * @author Jacob Charles
  * @author Alexis Kennedy
@@ -30,30 +30,26 @@ public class License {
 	
 	public License() {}
 	
+	/**
+	 * @param key - Primary Key reference in database
+	 */
 	public void setPrimaryKey(int key) {
 		this.primaryKey = key;
 	}
 	
 	/**
-	 * @param code - Primary indicator for a license, requires String
+	 * @param code - Old system id reference
 	 */
 	public void setCode(String code) {
 		this.code = code.trim();
 	}
-	
-	/**
-	 * 
-	 * @param name - Accepts a String
-	 */
+
 	public void setName(String name) {
 		this.name = name.trim();
 	}
 	
 	/**
-	 * 
-	 * @param price - Accepts a String, however parses to a Double.
-	 * Note that if their is a failure in parsing, the default setting
-	 * is 0.0
+	 * @param price - The default is 0.0 monehs
 	 */
 	public void setPrice(String price) {
 		try {
@@ -69,10 +65,7 @@ public class License {
 	}
 	
 	/**
-	 * 
-	 * @param annualPrice - Accepts a String, however parses to a Double.
-	 * Note that if their is a failure in parsing, the default setting
-	 * is 0.0
+	 * @param annualPrice - The default is 0.0 monehs
 	 */
 	public void setAnnualPrice(String annualPrice) {
 		try {
@@ -138,33 +131,18 @@ public class License {
 		return this.primaryKey;
 	}
 	
-	/**
-	 * 
-	 * @return - Returns a String
-	 */
 	public String getCode() {
 		return this.code;
 	}
 	
-	/**
-	 * 
-	 * @return - Returns a String
-	 */
 	public String getName() {
 		return this.name;
 	}
 	
-	/**
-	 * 
-	 * @return - Returns a Double
-	 */
 	public double getPrice() {
 		return this.price;
 	}
-	
-	/**
-	 * @return - Returns a Double
-	 */
+
 	public double getAnnualPrice() {
 		return this.annualPrice;
 	}

@@ -19,9 +19,6 @@ public class DBFactory {
 	private PreparedStatement ps;
 	private String query;
 	
-	/**
-	 * Constructor makes the connection
-	 */
 	public DBFactory() { }
 	
 	public void createConn() {
@@ -65,7 +62,7 @@ public class DBFactory {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
-		clearParams();
+		closeConn();
 		return result;
 	}
 	
@@ -86,8 +83,8 @@ public class DBFactory {
 			System.out.println("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
-		} 
-		clearParams();
+		}
+		closeConn();
 		return result;
 	}
 	

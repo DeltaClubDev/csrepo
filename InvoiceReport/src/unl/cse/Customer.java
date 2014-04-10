@@ -19,15 +19,14 @@ public class Customer {
 	private Address address;
 	
 	/**
-	 * @param code - Accepts a String for the primary indicator for
-	 * the company
+	 * @param code - Old system key reference
 	 */
 	public void setCode(String code) {
 		this.code = code.trim();
 	}
 	
 	/**
-	 * @param name - Accepts a String
+	 * @param name - Name of the company/customer
 	 */
 	public void setName(String name) {
 		this.name = name.trim();
@@ -54,17 +53,10 @@ public class Customer {
 		this.address = adr;
 	}
 	
-	/**
-	 * @return - Returns a String that is the primary 
-	 * indicator for the company
-	 */
 	public String getCode() {
 		return code;
 	}
 	
-	/**
-	 * @return - Returns a String
-	 */
 	public String getName() {
 		return name;
 	}
@@ -100,10 +92,16 @@ public class Customer {
 		return addressID;
 	}
 
+	/**
+	 * @param primaryKey - Primary key from datarBase
+	 */
 	public void setPrimaryKey(int primaryKey) {
 		this.primaryKey = primaryKey;
 	}
 
+	/**
+	 * @param primaryKey - Primary key from datarBase that references a dude
+	 */
 	public void setPersonsID(int personsID) {
 		this.personsID = personsID;
 	}

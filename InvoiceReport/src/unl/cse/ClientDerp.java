@@ -25,6 +25,9 @@ public class ClientDerp {
 		this.ihub = ihub;
 	}
 	
+	/**
+	 * Uploads Persons objects parsed from the old system.
+	 */
 	public void uploadPeople() {
 		for (Persons p : this.phub.getCollection()) {
 			api.addPerson(p.getId(), p.getFirstName(), p.getLastName(), p.getAddress().getStreet(), 
@@ -38,6 +41,9 @@ public class ClientDerp {
 		}
 	}
 	
+	/**
+	 * Uploads Customer objects parsed from the old system.
+	 */
 	public void uploadCustomers() {
 		for (Customer c : this.chub.getCustomerList()) {
 			api.addCustomer(c.getCode(), c.getType()+"", c.getHumanRep().getId(), c.getName(), 
@@ -46,6 +52,9 @@ public class ClientDerp {
 		}
 	}
 	
+	/**
+	 * Uploads Products objects parsed from the old system.
+	 */
 	public void uploadProducts() {
 		for (Equipment e : this.prhub.getEquipList()) {
 			api.addEquipment(e.getCode(), e.getName(), e.getUnitPrice());
@@ -58,6 +67,9 @@ public class ClientDerp {
 		}
 	}
 	
+	/**
+	 * Uploads Invoice objects parsed from the old system.
+	 */
 	public void uploadInvoices() {
 		for (Invoices i : this.ihub.getCollection()) {
 			api.addInvoice(i.getCode(), i.getCustomCode(), i.getSalesCode());
@@ -82,6 +94,9 @@ public class ClientDerp {
 		}
 	}
 	
+	/**
+	 * Tests api functionality with that data over there
+	 */
 	public void apiTest() {		
 		
 		// REMOVE ALL PERSONS
@@ -168,6 +183,9 @@ public class ClientDerp {
 		}	
 	}
 	
+	/**
+	 * stahps the connection to the datarbase
+	 */
 	public void stahp() {
 		api.closeDB();
 	}

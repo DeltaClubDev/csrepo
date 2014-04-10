@@ -1,9 +1,5 @@
 package unl.cse;
 
-import java.util.List; 
-import java.util.ArrayList;
-import java.util.Collections;
-
 /**
  * <b>Consultation</b> is a type of product where the instances live in
  * the <b>ProductsHub</b> class. This class will make use of the
@@ -28,26 +24,21 @@ public class Consultation {
 	private String info;
 	
 	/**
-	 * 
-	 * @param code - Primary indicator for a consultation, requires String
+	 * @param code - Old system key reference
 	 */
 	public void setCode(String code) {
 		this.code = code.trim();
 	}
 	
 	/**
-	 * 
-	 * @param name - Accepts a String
+	 * @param name - Company name
 	 */
 	public void setName(String name) {
 		this.name = name.trim();
 	}
 	
 	/**
-	 * 
-	 * @param hourPrice - Accepts a String, however parses to a Double.
-	 * Note that if their is a failure in parsing, the default setting
-	 * is 0.0
+	 * @param hourPrice - Default is 0.0
 	 */
 	public void setHourPrice(String hourPrice) {
 		try {
@@ -63,7 +54,6 @@ public class Consultation {
 	}
 	
 	/**
-	 * 
 	 * @param consult - Accepts the <b>Persons</b> instance of the
 	 * corresponding id to indicate which person if any owns this
 	 * consultation
@@ -101,32 +91,19 @@ public class Consultation {
 		this.info = this.getHours()+" hrs at $"+this.getHourPrice()+"/hr";
 	}
 	
-	/**
-	 * 
-	 * @return - Returns a String
-	 */
 	public String getCode() {
 		return code;
 	}
 	
-	/**
-	 * 
-	 * @return - Returns a String
-	 */
 	public String getName() {
 		return name;
 	}
-	
-	/**
-	 * 
-	 * @return - Returns a Double
-	 */
+
 	public double getHourPrice() {
 		return hourPrice;
 	}
 	
 	/**
-	 * 
 	 * @return - Returns the consultant which is a <b>Persons</b> object
 	 */
 	public Persons getHumanRep() {
@@ -157,6 +134,9 @@ public class Consultation {
 		return primaryKey;
 	}
 
+	/**
+	 * @param primaryKey - Primary key from datarBase
+	 */
 	public void setPrimaryKey(int primaryKey) {
 		this.primaryKey = primaryKey;
 	}

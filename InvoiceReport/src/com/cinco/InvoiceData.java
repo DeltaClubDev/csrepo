@@ -205,7 +205,8 @@ public class InvoiceData {
 		String queryC = "INSERT INTO Company (PersonsID, AddressID, Name, TypeThing, CompCode)"+
 						" VALUES (?, ?, ?, ?, ?)";
 		dbConn.setQuery(queryC);
-		dbConn.setIntParam(1, id);
+		if (id == -1) { dbConn.setNullParam(1); }
+		else { dbConn.setIntParam(1, id); }
 		dbConn.setIntParam(2, addressID);
 		dbConn.setStringParam(3, name);
 		dbConn.setStringParam(4, type);
@@ -305,7 +306,8 @@ public class InvoiceData {
 		dbConn.setQuery(queryP);
 		dbConn.setStringParam(1, "C");				//Type
 		dbConn.setStringParam(2, productCode);		//ProductCode
-		dbConn.setIntParam(3, id);					//PersonID
+		if (id == -1) { dbConn.setNullParam(3); }	// PersonsID
+		else { dbConn.setIntParam(3, id); }
 		dbConn.setDoubleParam(4, hourlyFee);		//HourMoneh
 		dbConn.setStringParam(5, name);				//Name
 		dbConn.runUpdate();

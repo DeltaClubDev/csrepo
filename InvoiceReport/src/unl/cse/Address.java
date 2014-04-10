@@ -24,20 +24,23 @@ public class Address {
 	
 	public Address() { }
 	
+	/**
+	 * returns the primary key of an Address from the database
+	 * @return - Primary Key (int)
+	 */
 	public int getAddrID() {
 		return addrID;
 	}
 
+	/**
+	 * Sets the primary key
+	 * @param addrID - (int)
+	 */
 	public void setAddrID(int addrID) {
 		this.addrID = addrID;
 	}
 
-	/**
-	 * 
-	 * @param street - Accepts a String
-	 */
 	public void setStreet(String street) {
-		
 		if ((street != null)  && (!street.trim().isEmpty())) {
 			this.street = street.trim();
 		} else {
@@ -45,12 +48,7 @@ public class Address {
 		}
 	}
 
-	/**
-	 * 
-	 * @param city - Accepts a String
-	 */
 	public void setCity(String city) {
-		
 		if ((city != null) && (!city.trim().isEmpty())) {
 			this.city = city.trim();
 		} else {
@@ -58,12 +56,7 @@ public class Address {
 		}
 	}
 
-	/**
-	 * 
-	 * @param state - Accepts a String
-	 */
 	public void setState(String state) {
-		
 		if ((state != null) && (!state.trim().isEmpty())) {
 			this.state = state.trim();
 		} else {
@@ -72,12 +65,11 @@ public class Address {
 	}
 
 	/**
-	 * 
+	 * Sets the zip code
 	 * @param zip - Accepts a String, please leave it as a String. Zip codes
 	 * can also contain "-" 
 	 */
 	public void setZip(String zip) {
-		
 		if ((zip != null) && (!zip.trim().isEmpty())) {
 			this.zip = zip.trim();
 		} else {
@@ -85,10 +77,6 @@ public class Address {
 		}
 	}
 
-	/**
-	 * 
-	 * @param country - Accepts a String
-	 */
 	public void setCountry(String country) {
 
 		if ((country != null) && (!country.trim().isEmpty())) {
@@ -98,42 +86,21 @@ public class Address {
 		}
 	}
 
-	/**
-	 * 
-	 * @return - Returns a String
-	 */
 	public String getStreet() {
 		return street;
 	}
 
-	/**
-	 * 
-	 * @return - Returns a String
-	 */
 	public String getCity() {
 		return city;
 	}
 
-	/**
-	 * 
-	 * @return - Returns a String
-	 */
 	public String getState() {
 		return state;
 	}
 
-	/**
-	 * 
-	 * @return - Returns a String
-	 */
 	public String getZip() {
 		return zip;
 	}
-
-	/**
-	 * 
-	 * @return - Returns a String
-	 */
 	public String getCountry() {
 		return country;
 	}

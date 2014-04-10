@@ -29,7 +29,6 @@ public class ProductsHub {
 	}
 	
 	/**
-	 * 
 	 * @param newEquipment - Adds an instance of <b>Equipment</b> to the hub.
 	 */
 	public void addEquipment(Equipment newEquipment) {
@@ -37,7 +36,6 @@ public class ProductsHub {
 	}
 	
 	/**
-	 * 
 	 * @param newConsultation - Adds an instance of <b>Consultation</b> to the hub.
 	 */
 	public void addConsutation(Consultation newConsultation) {
@@ -45,7 +43,6 @@ public class ProductsHub {
 	}
 	
 	/**
-	 * 
 	 * @param newLicense - Adds an instance of <b>License</b> to the hub.
 	 */
 	public void addLicense(License newLicense) {
@@ -53,7 +50,6 @@ public class ProductsHub {
 	}
 	
 	/**
-	 * 
 	 * @return - Returns an <i>unmodifiableList</i> of all the <b>Equipment</b> instances
 	 */
 	public List<Equipment> getEquipList() {
@@ -69,7 +65,6 @@ public class ProductsHub {
 	}
 	
 	/**
-	 * 
 	 * @param id - Used to match the correct equipment
 	 * @return - Returns a List of Equipment
 	 */
@@ -82,7 +77,6 @@ public class ProductsHub {
 	}
 	
 	/**
-	 * 
 	 * @return - Returns an <i>unmodifiableList</i> of all the <b>Consultation</b> instances
 	 */
 	public List<Consultation> getConsultList() {
@@ -98,7 +92,6 @@ public class ProductsHub {
 	}
 	
 	/**
-	 * 
 	 * @param id - Used to match the correct Consultation
 	 * @return - Returns a List of Consultation
 	 */
@@ -111,7 +104,6 @@ public class ProductsHub {
 	}
 	
 	/**
-	 * 
 	 * @return - Returns an <i>unmodifiableList</i> of all the <b>License</b> instances
 	 */
 	public List<License> getLiceList() {
@@ -127,7 +119,6 @@ public class ProductsHub {
 	}
 	
 	/**
-	 * 
 	 * @param id - Used to match the correct License
 	 * @return - Returns a List of License
 	 */

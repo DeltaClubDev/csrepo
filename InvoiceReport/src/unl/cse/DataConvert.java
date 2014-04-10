@@ -1,17 +1,12 @@
 package unl.cse;
 
-import java.io.File;
+import java.io.File; 
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -23,9 +18,6 @@ import com.google.gson.GsonBuilder;
  * version 0.5.0. Also, Invoices are processed here as 
  * the Invoices data is still considered data 
  * converting.
- * 
- * As of version 0.5.0 this class now starts up a test 
- * client for the database api.
  * 
  * @author Jacob Charles
  * @author Alexis Kennedy
@@ -50,10 +42,12 @@ public class DataConvert {
 	 * <b>DataConvert</b> constructor requires functionality parameters
 	 * that determines which functions to use.
 	 * 
-	 * @param xmlOut - If true, will output XML in the console
 	 * @param genXML - If true, will generate an XML file
 	 * @param jsonOut - If true, will output JSON in the console
 	 * @param genJson - If true, will generate an JSON file
+	 * @param genTxt - Creates an invoice output
+	 * @param dbDownload - Downloads objects from data base and creates objects
+	 * @param verbose - Used to see exact data (for debugging)
 	 */
 	public DataConvert(boolean jsonOut, boolean genJson, boolean genTxt, boolean dbDownload, boolean verbose) {
 		
